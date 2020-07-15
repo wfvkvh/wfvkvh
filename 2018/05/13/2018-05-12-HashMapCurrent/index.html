@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="迷迭香">
 <meta property="og:description" content="文章来自网站 JAVADOOP  网上关于 HashMap 和 ConcurrentHashMap 的文章确实不少，不过缺斤少两的文章比较多，所以才想自己也写一篇，把细节说清楚说透，尤其像 java8 中的 ConcurrentHashMap，大部分文章都说不清楚。终归是希望能降低大家学习的成本，不希望大家到处找各种不是很靠谱的文章，看完一篇又一篇，可是还是模模糊糊。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://rosemarry7.github.io/img/20180512/1.png">
-<meta property="og:image" content="https://rosemarry7.github.io/img/20180512/3.png">
+<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180512/1.png">
+<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180512/3.png">
 <meta property="article:published_time" content="2018-05-13T05:11:10.317Z">
-<meta property="article:modified_time" content="2020-07-15T09:50:12.871Z">
+<meta property="article:modified_time" content="2020-07-15T10:19:53.499Z">
 <meta property="article:author" content="Rosemarry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://rosemarry7.github.io/img/20180512/1.png">
+<meta name="twitter:image" content="https://rosemarry7.github.io/blog/images/20180512/1.png">
 
 <link rel="canonical" href="https://rosemarry7.github.io/blog/2018/05/13/2018-05-12-HashMapCurrent/">
 
@@ -250,7 +250,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-15 17:50:12" itemprop="dateModified" datetime="2020-07-15T17:50:12+08:00">2020-07-15</time>
+                <time title="Modified: 2020-07-15 18:19:53" itemprop="dateModified" datetime="2020-07-15T18:19:53+08:00">2020-07-15</time>
               </span>
 
           
@@ -274,7 +274,7 @@
 <p>阅读前提：本文分析的是源码，所以至少读者要熟悉它们的接口使用，同时，对于并发，读者至少要知道 CAS、ReentrantLock、UNSAFE 操作这几个基本的知识，文中不会对这些知识进行介绍。java8 用到了红黑树，不过本文不会进行展开，感兴趣的读者请自行查找相关资料。</p>
 <h2 id="java7-HashMap"><a href="#java7-HashMap" class="headerlink" title="java7-HashMap"></a><strong>java7-HashMap</strong></h2><p>HashMap 是最简单的，一来我们非常熟悉，二来就是它不支持并发操作，所以源码也非常简单。</p>
 <p>首先，我们用下面这张图来介绍 HashMap 的结构。</p>
-<h3 id="java7-HashMap结构"><a href="#java7-HashMap结构" class="headerlink" title="java7-HashMap结构"></a><strong>java7-HashMap</strong>结构</h3><p><img src="/img/20180512/1.png" alt="">{:height=”100%” width=”100%”}</p>
+<h3 id="java7-HashMap结构"><a href="#java7-HashMap结构" class="headerlink" title="java7-HashMap结构"></a><strong>java7-HashMap</strong>结构</h3><p><img src="/blog/images/20180512/1.png" alt="">{:height=”100%” width=”100%”}</p>
 <blockquote>
 <p>这个仅仅是示意图，因为没有考虑到数组要扩容的情况，具体的后面再说。</p>
 </blockquote>
@@ -309,7 +309,7 @@
 <h3 id="java7-ConcurrentHashMap"><a href="#java7-ConcurrentHashMap" class="headerlink" title="java7 ConcurrentHashMap"></a><strong>java7 ConcurrentHashMap</strong></h3><p>ConcurrentHashMap 和 HashMap 思路是差不多的，但是因为它支持并发操作，所以要复杂一些。</p>
 <p>整个 ConcurrentHashMap 由一个个 Segment 组成，Segment 代表”部分“或”一段“的意思，所以很多地方都会将其描述为分段锁。注意，行文中，我很多地方用了“槽”来代表一个 segment。</p>
 <p>简单理解就是，ConcurrentHashMap 是一个 Segment 数组，Segment 通过继承 ReentrantLock 来进行加锁，所以每次需要加锁的操作锁住的是一个 segment，这样只要保证每个 Segment 是线程安全的，也就实现了全局的线程安全。</p>
-<p><img src="/img/20180512/3.png" alt="">{:height=”100%” width=”100%”}</p>
+<p><img src="/blog/images/20180512/3.png" alt=""></p>
 <p>concurrencyLevel：并行级别、并发数、Segment 数，怎么翻译不重要，理解它。默认是 16，也就是说 ConcurrentHashMap 有 16 个 Segments，所以理论上，这个时候，最多可以同时支持 16 个线程并发写，只要它们的操作分别分布在不同的 Segment 上。这个值可以在初始化的时候设置为其他值，但是一旦初始化以后，它是不可以扩容的。</p>
 <p>再具体到每个 Segment 内部，其实每个 Segment 很像之前介绍的 HashMap，不过它要保证线程安全，所以处理起来要麻烦些。</p>
 <h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><p>initialCapacity：初始容量，这个值指的是整个 ConcurrentHashMap 的初始容量，实际操作的时候需要平均分给每个 Segment。</p>

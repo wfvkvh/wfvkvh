@@ -19,29 +19,29 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cc7lx2lzfbv2sb6bi.gitee.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
   <meta name="description" content="本文转自 潇湘隐者  在MySQL数据库中出现了阻塞问题，如何快速查找定位问题根源？在实验开始前，我们先梳理一下有什么工具或命令查看MySQL的阻塞，另外，我们也要一一对比其优劣，因为有些命令可能在实际环境下可能并不适用。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「数据库」MySQL Innodb如何找出阻塞事务源头SQL">
-<meta property="og:url" content="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/20/2018-05-20-mysqlblock/index.html">
+<meta property="og:url" content="https://rosemarry7.github.io/blog/2018/05/20/2018-05-20-mysqlblock/index.html">
 <meta property="og:site_name" content="迷迭香">
 <meta property="og:description" content="本文转自 潇湘隐者  在MySQL数据库中出现了阻塞问题，如何快速查找定位问题根源？在实验开始前，我们先梳理一下有什么工具或命令查看MySQL的阻塞，另外，我们也要一一对比其优劣，因为有些命令可能在实际环境下可能并不适用。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180520/12.png">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180520/13.png">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180520/14.png">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180520/15.png">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180520/16.png">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180520/17.png">
+<meta property="og:image" content="https://rosemarry7.github.io/img/20180520/12.png">
+<meta property="og:image" content="https://rosemarry7.github.io/img/20180520/13.png">
+<meta property="og:image" content="https://rosemarry7.github.io/img/20180520/14.png">
+<meta property="og:image" content="https://rosemarry7.github.io/img/20180520/15.png">
+<meta property="og:image" content="https://rosemarry7.github.io/img/20180520/16.png">
+<meta property="og:image" content="https://rosemarry7.github.io/img/20180520/17.png">
 <meta property="article:published_time" content="2018-05-20T09:09:46.109Z">
 <meta property="article:modified_time" content="2020-07-15T09:48:29.878Z">
 <meta property="article:author" content="Rosemarry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180520/12.png">
+<meta name="twitter:image" content="https://rosemarry7.github.io/img/20180520/12.png">
 
-<link rel="canonical" href="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/20/2018-05-20-mysqlblock/">
+<link rel="canonical" href="https://rosemarry7.github.io/blog/2018/05/20/2018-05-20-mysqlblock/">
 
 
 <script class="page-configurations">
@@ -224,7 +224,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/20/2018-05-20-mysqlblock/">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/blog/2018/05/20/2018-05-20-mysqlblock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">

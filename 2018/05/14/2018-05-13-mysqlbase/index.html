@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/blog/css/main.css">
 
-
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
   
   <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
@@ -29,12 +29,12 @@
 <meta property="og:site_name" content="迷迭香">
 <meta property="og:description" content="创建数据库1CREATE DATABASE database_name;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://rosemarry7.github.io/img/20180513/2.jpg">
+<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180513/2.jpg">
 <meta property="article:published_time" content="2018-05-13T16:16:45.147Z">
-<meta property="article:modified_time" content="2020-07-15T09:49:34.738Z">
+<meta property="article:modified_time" content="2020-07-15T10:59:29.591Z">
 <meta property="article:author" content="Rosemarry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://rosemarry7.github.io/img/20180513/2.jpg">
+<meta name="twitter:image" content="https://rosemarry7.github.io/blog/images/20180513/2.jpg">
 
 <link rel="canonical" href="https://rosemarry7.github.io/blog/2018/05/14/2018-05-13-mysqlbase/">
 
@@ -248,7 +248,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-15 17:49:34" itemprop="dateModified" datetime="2020-07-15T17:49:34+08:00">2020-07-15</time>
+                <time title="Modified: 2020-07-15 18:59:29" itemprop="dateModified" datetime="2020-07-15T18:59:29+08:00">2020-07-15</time>
               </span>
 
           
@@ -324,7 +324,7 @@
 </li>
 <li><p>运算符     </p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 算术运算符 加减乘除取余数</span></span><br><span class="line"><span class="keyword">SELECT</span> tb_id+<span class="number">1</span>,tb_id+<span class="number">3</span><span class="number">-5</span>,tb_id<span class="number">-4</span>+<span class="number">9</span> <span class="keyword">FROM</span> tb_a;</span><br></pre></td></tr></table></figure>
-<p>比较运算符<br><img src="/img/20180513/2.jpg" alt="">{:height=”100%” width=”100%”}</p>
+<p>比较运算符<br><img src="/blog/images/20180513/2.jpg" alt=""></p>
 </li>
 <li><p>group by + having + limit</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT id,SUM(price),GROUP_CONCAT(name) FROM tb_fruit WHERE id&gt;0 GROUP BY id HAVING COUNT(name)&gt;1 ORDER BY name DESC LIMIT 4,3;</span><br><span class="line">SELECT * FROM tb_fruit WHERE id&gt;0 GROUP BY id,name;</span><br></pre></td></tr></table></figure>

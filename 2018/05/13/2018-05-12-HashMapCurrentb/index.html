@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/blog/css/main.css">
 
-
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
   
   <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="迷迭香">
 <meta property="og:description" content="文章来自网站 JAVADOOP  Java8 HashMapJava8 对 HashMap 进行了一些修改，最大的不同就是利用了红黑树，所以其由 数组+链表+红黑树 组成。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://rosemarry7.github.io/img/20180512/a.png">
-<meta property="og:image" content="https://rosemarry7.github.io/img/20180512/b.png">
+<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180512/a.png">
+<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180512/b.png">
 <meta property="article:published_time" content="2018-05-13T05:11:04.511Z">
-<meta property="article:modified_time" content="2020-07-15T09:50:03.406Z">
+<meta property="article:modified_time" content="2020-07-15T10:59:29.584Z">
 <meta property="article:author" content="Rosemarry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://rosemarry7.github.io/img/20180512/a.png">
+<meta name="twitter:image" content="https://rosemarry7.github.io/blog/images/20180512/a.png">
 
 <link rel="canonical" href="https://rosemarry7.github.io/blog/2018/05/13/2018-05-12-HashMapCurrentb/">
 
@@ -250,7 +250,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-15 17:50:03" itemprop="dateModified" datetime="2020-07-15T17:50:03+08:00">2020-07-15</time>
+                <time title="Modified: 2020-07-15 18:59:29" itemprop="dateModified" datetime="2020-07-15T18:59:29+08:00">2020-07-15</time>
               </span>
 
           
@@ -273,7 +273,7 @@
 <p>根据 Java7 HashMap 的介绍，我们知道，查找的时候，根据 hash 值我们能够快速定位到数组的具体下标，但是之后的话，需要顺着链表一个个比较下去才能找到我们需要的，时间复杂度取决于链表的长度，为 O(n)。</p>
 <p>为了降低这部分的开销，在 Java8 中，当链表中的元素达到了 8 个时，会将链表转换为红黑树，在这些位置进行查找的时候可以降低时间复杂度为 O(logN)。</p>
 <p>来一张图简单示意一下吧：</p>
-<p><img src="/img/20180512/a.png" alt="">{:height=”100%” width=”100%”}</p>
+<p><img src="/blog/images/20180512/a.png" alt=""></p>
 <p>注意，上图是示意图，主要是描述结构，不会达到这个状态的，因为这么多数据的时候早就扩容了。</p>
 <p>下面，我们还是用代码来介绍吧，个人感觉，Java8 的源码可读性要差一些，不过精简一些。</p>
 <p>Java7 中使用 Entry 来代表每个 HashMap 中的数据节点，Java8 中使用 Node，基本没有区别，都是 key，value，hash 和 next 这四个属性，不过，Node 只能用于链表的情况，红黑树的情况需要使用 TreeNode。</p>
@@ -289,7 +289,7 @@
 <h2 id="Java8-ConcurrentHashMap"><a href="#Java8-ConcurrentHashMap" class="headerlink" title="Java8 ConcurrentHashMap"></a><strong>Java8 ConcurrentHashMap</strong></h2><p>Java7 中实现的 ConcurrentHashMap 说实话还是比较复杂的，Java8 对 ConcurrentHashMap 进行了比较大的改动。建议读者可以参考 Java8 中 HashMap 相对于 Java7 HashMap 的改动，对于 ConcurrentHashMap，Java8 也引入了红黑树。</p>
 <p>说实话，Java8 ConcurrentHashMap 源码真心不简单，最难的在于扩容，数据迁移操作不容易看懂。</p>
 <p>我们先用一个示意图来描述下其结构：</p>
-<p><img src="/img/20180512/b.png" alt="">{:height=”100%” width=”100%”}</p>
+<p><img src="/blog/images/20180512/b.png" alt=""></p>
 <p>结构上和 Java8 的 HashMap 基本上一样，不过它要保证线程安全性，所以在源码上确实要复杂一些。</p>
 <h4 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这构造函数里，什么都不干</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ConcurrentHashMap</span><span class="params">(<span class="keyword">int</span> initialCapacity)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException();</span><br><span class="line">    <span class="keyword">int</span> cap = ((initialCapacity &gt;= (MAXIMUM_CAPACITY &gt;&gt;&gt; <span class="number">1</span>)) ?</span><br><span class="line">               MAXIMUM_CAPACITY :</span><br><span class="line">               tableSizeFor(initialCapacity + (initialCapacity &gt;&gt;&gt; <span class="number">1</span>) + <span class="number">1</span>));</span><br><span class="line">    <span class="keyword">this</span>.sizeCtl = cap;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个初始化方法有点意思，通过提供初始容量，计算了 sizeCtl，sizeCtl = 【 (1.5 * initialCapacity + 1)，然后向上取最近的 2 的 n 次方】。如 initialCapacity 为 10，那么得到 sizeCtl 为 16，如果 initialCapacity 为 11，得到 sizeCtl 为 32。</p>

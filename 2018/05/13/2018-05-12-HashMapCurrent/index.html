@@ -12,7 +12,7 @@
 
 <link rel="stylesheet" href="/blog/css/main.css">
 
-
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
   
   <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180512/1.png">
 <meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180512/3.png">
 <meta property="article:published_time" content="2018-05-13T05:11:10.317Z">
-<meta property="article:modified_time" content="2020-07-15T10:19:53.499Z">
+<meta property="article:modified_time" content="2020-07-15T10:59:29.617Z">
 <meta property="article:author" content="Rosemarry">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://rosemarry7.github.io/blog/images/20180512/1.png">
@@ -250,7 +250,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-15 18:19:53" itemprop="dateModified" datetime="2020-07-15T18:19:53+08:00">2020-07-15</time>
+                <time title="Modified: 2020-07-15 18:59:29" itemprop="dateModified" datetime="2020-07-15T18:59:29+08:00">2020-07-15</time>
               </span>
 
           
@@ -274,7 +274,7 @@
 <p>阅读前提：本文分析的是源码，所以至少读者要熟悉它们的接口使用，同时，对于并发，读者至少要知道 CAS、ReentrantLock、UNSAFE 操作这几个基本的知识，文中不会对这些知识进行介绍。java8 用到了红黑树，不过本文不会进行展开，感兴趣的读者请自行查找相关资料。</p>
 <h2 id="java7-HashMap"><a href="#java7-HashMap" class="headerlink" title="java7-HashMap"></a><strong>java7-HashMap</strong></h2><p>HashMap 是最简单的，一来我们非常熟悉，二来就是它不支持并发操作，所以源码也非常简单。</p>
 <p>首先，我们用下面这张图来介绍 HashMap 的结构。</p>
-<h3 id="java7-HashMap结构"><a href="#java7-HashMap结构" class="headerlink" title="java7-HashMap结构"></a><strong>java7-HashMap</strong>结构</h3><p><img src="/blog/images/20180512/1.png" alt="">{:height=”100%” width=”100%”}</p>
+<h3 id="java7-HashMap结构"><a href="#java7-HashMap结构" class="headerlink" title="java7-HashMap结构"></a><strong>java7-HashMap</strong>结构</h3><p><img src="/blog/images/20180512/1.png" alt=""></p>
 <blockquote>
 <p>这个仅仅是示意图，因为没有考虑到数组要扩容的情况，具体的后面再说。</p>
 </blockquote>

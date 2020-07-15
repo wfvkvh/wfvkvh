@@ -5,36 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/blog/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   
-  <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cc7lx2lzfbv2sb6bi.gitee.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+    var CONFIG = {"hostname":"cc7lx2lzfbv2sb6bi.gitee.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="本文转自于网站JAVADOOP  我相信大家都看过很多的关于线程池的文章，基本上也是面试必问的，好像我写这篇文章其实是没有什么意义的，不过，我相信你也和我一样，看了很多文章还是一知半解，甚至可能看了很多瞎说的文章。希望大家看过这篇文章以后，就可以完全掌握 Java 线程池了。  我发现好些人都是因为这篇文章来到本站的，希望这篇让人留下第一眼印象的文章能给你带来收获。  本文一大重点是源码解析，不">
+  <meta name="description" content="本文转自于网站JAVADOOP  我相信大家都看过很多的关于线程池的文章，基本上也是面试必问的，好像我写这篇文章其实是没有什么意义的，不过，我相信你也和我一样，看了很多文章还是一知半解，甚至可能看了很多瞎说的文章。希望大家看过这篇文章以后，就可以完全掌握 Java 线程池了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「并发」深度解读Java线程池设计思想及源码实现">
 <meta property="og:url" content="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/17/2018-05-17-excutor/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="本文转自于网站JAVADOOP  我相信大家都看过很多的关于线程池的文章，基本上也是面试必问的，好像我写这篇文章其实是没有什么意义的，不过，我相信你也和我一样，看了很多文章还是一知半解，甚至可能看了很多瞎说的文章。希望大家看过这篇文章以后，就可以完全掌握 Java 线程池了。  我发现好些人都是因为这篇文章来到本站的，希望这篇让人留下第一眼印象的文章能给你带来收获。  本文一大重点是源码解析，不">
+<meta property="og:site_name" content="迷迭香">
+<meta property="og:description" content="本文转自于网站JAVADOOP  我相信大家都看过很多的关于线程池的文章，基本上也是面试必问的，好像我写这篇文章其实是没有什么意义的，不过，我相信你也和我一样，看了很多文章还是一知半解，甚至可能看了很多瞎说的文章。希望大家看过这篇文章以后，就可以完全掌握 Java 线程池了。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/assets/img/20180517/4.png">
+<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180517/1.jpg">
+<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180517/2.png">
+<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180517/4.png">
 <meta property="article:published_time" content="2018-05-17T15:07:14.654Z">
-<meta property="article:modified_time" content="2018-05-17T15:07:14.654Z">
+<meta property="article:modified_time" content="2020-07-15T09:49:10.532Z">
 <meta property="article:author" content="Rosemarry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/assets/img/20180517/4.png">
+<meta name="twitter:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180517/1.jpg">
 
 <link rel="canonical" href="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/17/2018-05-17-excutor/">
 
@@ -49,7 +51,7 @@
   };
 </script>
 
-  <title>「并发」深度解读Java线程池设计思想及源码实现 | Hexo</title>
+  <title>「并发」深度解读Java线程池设计思想及源码实现 | 迷迭香</title>
   
 
 
@@ -103,14 +105,17 @@
         <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
-    <a href="/blog/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">迷迭香</h1>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -123,6 +128,20 @@
 
 
 
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
 
 
 
@@ -150,7 +169,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Executor-接口"><span class="nav-number">1.</span> <span class="nav-text">Executor 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ExecutorService"><span class="nav-number">2.</span> <span class="nav-text">ExecutorService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FutureTask"><span class="nav-number">3.</span> <span class="nav-text">FutureTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbstractExecutorService"><span class="nav-number">4.</span> <span class="nav-text">AbstractExecutorService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor"><span class="nav-number">5.</span> <span class="nav-text">ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executors"><span class="nav-number">6.</span> <span class="nav-text">Executors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#总览"><span class="nav-number">1.</span> <span class="nav-text">总览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executor-接口"><span class="nav-number">2.</span> <span class="nav-text">Executor 接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ExecutorService"><span class="nav-number">3.</span> <span class="nav-text">ExecutorService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FutureTask"><span class="nav-number">4.</span> <span class="nav-text">FutureTask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AbstractExecutorService"><span class="nav-number">5.</span> <span class="nav-text">AbstractExecutorService</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadPoolExecutor"><span class="nav-number">6.</span> <span class="nav-text">ThreadPoolExecutor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Executors"><span class="nav-number">7.</span> <span class="nav-text">Executors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -162,7 +181,8 @@
 <div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/blog/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
@@ -204,13 +224,13 @@
     <link itemprop="mainEntityOfPage" href="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/17/2018-05-17-excutor/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Rosemarry">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="迷迭香">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -226,6 +246,13 @@
 
               <time title="Created: 2018-05-17 23:07:14" itemprop="dateCreated datePublished" datetime="2018-05-17T23:07:14+08:00">2018-05-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-15 17:49:10" itemprop="dateModified" datetime="2020-07-15T17:49:10+08:00">2020-07-15</time>
+              </span>
 
           
 
@@ -242,11 +269,21 @@
 <p>本文转自于网站<a href="https://www.javadoop.com" target="_blank" rel="noopener">JAVADOOP</a></p>
 </blockquote>
 <p>我相信大家都看过很多的关于线程池的文章，基本上也是面试必问的，好像我写这篇文章其实是没有什么意义的，不过，我相信你也和我一样，看了很多文章还是一知半解，甚至可能看了很多瞎说的文章。希望大家看过这篇文章以后，就可以完全掌握 Java 线程池了。</p>
+<a id="more"></a>
+
 <blockquote>
 <p>我发现好些人都是因为这篇文章来到本站的，希望这篇让人留下第一眼印象的文章能给你带来收获。</p>
 </blockquote>
 <p>本文一大重点是源码解析，不过线程池设计思想以及作者实现过程中的一些巧妙用法是我想传达给读者的。本文还是会一行行关键代码进行分析，目的是为了让那些自己看源码不是很理解的同学可以得到参考。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line"></span><br><span class="line">线程池是非常重要的工具，如果你要成为一个好的工程师，还是得比较好地掌握这个知识。即使你为了谋生，也要知道，这基本上是面试必问的题目，而且面试官很容易从被面试者的回答中捕捉到被面试者的技术水平。</span><br><span class="line"></span><br><span class="line">本文略长，建议在 pc 上阅读，边看文章边翻源码（Java7 和 Java8 都一样），建议想好好看的读者抽出至少 15 至 30 分钟的整块时间来阅读。当然，如果读者仅为面试准备，可以直接滑到最后的总结部分。</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">### 总览</span><br><span class="line">    </span><br><span class="line">开篇来一些废话。下图是 java 线程池几个相关类的继承结构：</span><br><span class="line">![](&#x2F;assets&#x2F;img&#x2F;20180517&#x2F;1.jpg)&#123;:height&#x3D;&quot;100%&quot; width&#x3D;&quot;100%&quot;&#125;</span><br><span class="line"></span><br><span class="line">先简单说说这个继承结构，Executor 位于最顶层，也是最简单的，就一个 execute(Runnable runnable) 接口方法定义。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ExecutorService 也是接口，在 Executor 接口的基础上添加了很多的接口方法，所以一般来说我们会使用这个接口。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后再下来一层是 AbstractExecutorService，从名字我们就知道，这是抽象类，这里实现了非常有用的一些方法供子类直接使用，之后我们再细说。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">然后才到我们的重点部分 ThreadPoolExecutor 类，这个类提供了关于线程池所需的非常丰富的功能。</span><br><span class="line"></span><br><span class="line">另外，我们还涉及到下图中的这些类：</span><br><span class="line">![](&#x2F;assets&#x2F;img&#x2F;20180517&#x2F;2.png)&#123;:height&#x3D;&quot;100%&quot; width&#x3D;&quot;100%&quot;&#125;</span><br><span class="line">同在并发包中的 Executors 类，类名中带字母 s，我们猜到这个是工具类，里面的方法都是静态方法，如以下我们最常用的用于生成 ThreadPoolExecutor 的实例的一些方法：</span><br><span class="line">&#96;&#96;&#96;java</span><br><span class="line">public static ExecutorService newCachedThreadPool() &#123;</span><br><span class="line">    return new ThreadPoolExecutor(0, Integer.MAX_VALUE,</span><br><span class="line">                                  60L, TimeUnit.SECONDS,</span><br><span class="line">                                  new SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line">public static ExecutorService newFixedThreadPool(int nThreads) &#123;</span><br><span class="line">    return new ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                  0L, TimeUnit.MILLISECONDS,</span><br><span class="line">                                  new LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>线程池是非常重要的工具，如果你要成为一个好的工程师，还是得比较好地掌握这个知识。即使你为了谋生，也要知道，这基本上是面试必问的题目，而且面试官很容易从被面试者的回答中捕捉到被面试者的技术水平。</p>
+<p>本文略长，建议在 pc 上阅读，边看文章边翻源码（Java7 和 Java8 都一样），建议想好好看的读者抽出至少 15 至 30 分钟的整块时间来阅读。当然，如果读者仅为面试准备，可以直接滑到最后的总结部分。</p>
+<h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><p>开篇来一些废话。下图是 java 线程池几个相关类的继承结构：<br><img src="/img/20180517/1.jpg" alt="">{:height=”100%” width=”100%”}</p>
+<p>先简单说说这个继承结构，Executor 位于最顶层，也是最简单的，就一个 execute(Runnable runnable) 接口方法定义。</p>
+<p>ExecutorService 也是接口，在 Executor 接口的基础上添加了很多的接口方法，所以一般来说我们会使用这个接口。</p>
+<p>然后再下来一层是 AbstractExecutorService，从名字我们就知道，这是抽象类，这里实现了非常有用的一些方法供子类直接使用，之后我们再细说。</p>
+<p>然后才到我们的重点部分 ThreadPoolExecutor 类，这个类提供了关于线程池所需的非常丰富的功能。</p>
+<p>另外，我们还涉及到下图中的这些类：<br><img src="/img/20180517/2.png" alt="">{:height=”100%” width=”100%”}<br>同在并发包中的 Executors 类，类名中带字母 s，我们猜到这个是工具类，里面的方法都是静态方法，如以下我们最常用的用于生成 ThreadPoolExecutor 的实例的一些方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                  <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                  <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>另外，由于<strong>线程池支持获取线程执行的结果</strong>，所以，引入了 Future 接口，RunnableFuture 继承自此接口，然后我们最需要关心的就是它的实现类 FutureTask。到这里，记住这个概念，在线程池的使用过程中，我们是往线程池提交任务（task），使用过线程池的都知道，我们提交的每个任务是实现了 Runnable 接口的，其实就是先将 Runnable 的任务包装成 FutureTask，然后再提交到线程池。这样，读者才能比较容易记住 FutureTask 这个类名：它首先是一个任务（Task），然后具有 Future 接口的语义，即可以在将来（Future）得到执行的结果。</p>
 <p>当然，线程池中的 BlockingQueue 也是非常重要的概念，如果线程数达到 corePoolSize，我们的每个任务会提交到等待队列中，等待线程池中的线程来取任务并执行。这里的 BlockingQueue 通常我们使用其实现类 LinkedBlockingQueue、ArrayBlockingQueue 和 SynchronousQueue，每个实现类都有不同的特征，使用场景之后会慢慢分析。想要详细了解各个 BlockingQueue 的读者，可以参考我的前面的一篇对 BlockingQueue 的各个实现类进行详细分析的文章。</p>
@@ -310,7 +347,7 @@
 <p>一个最基本的概念是，submit 方法中，参数是 Runnable 类型（也有Callable 类型），这个参数不是用于 new Thread(<code>runnable</code>).start() 中的，此处的这个参数不是用于启动线程的，这里指的是任务，任务要做的事情是 run() 方法里面定义的或 Callable 中的 call() 方法里面定义的。</p>
 <p>初学者往往会搞混这个，因为 Runnable 总是在各个地方出现，经常把一个 Runnable 包到另一个 Runnable 中。请把它想象成有个 Task 接口，这个接口里面有一个 run() 方法（我想作者只是不想因为这个再定义一个完全可以用 Runnable 来代替的接口，Callable 的出现，完全是因为 Runnable 不能满足需要）。</p>
 <p>我们回过神来继续往下看，我画了一个简单的示意图来描述线程池中的一些主要的构件：</p>
-<p><img src="/assets/img/20180517/4.png" alt="">{:height=”100%” width=”100%”}<br>当然，上图没有考虑队列是否有界，提交任务时队列满了怎么办？什么情况下会创建新的线程？提交任务时线程池满了怎么办？空闲线程怎么关掉？这些问题下面我们会一一解决。</p>
+<p><img src="/img/20180517/4.png" alt="">{:height=”100%” width=”100%”}<br>当然，上图没有考虑队列是否有界，提交任务时队列满了怎么办？什么情况下会创建新的线程？提交任务时线程池满了怎么办？空闲线程怎么关掉？这些问题下面我们会一一解决。</p>
 <p>我们经常会使用 <code>Executors</code> 这个工具类来快速构造一个线程池，对于初学者而言，这种工具类是很有用的，开发者不需要关注太多的细节，只要知道自己需要一个线程池，仅仅提供必需的参数就可以了，其他参数都采用作者提供的默认值。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads,</span><br><span class="line">                                  <span class="number">0L</span>, TimeUnit.MILLISECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newCachedThreadPool</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(<span class="number">0</span>, Integer.MAX_VALUE,</span><br><span class="line">                                  <span class="number">60L</span>, TimeUnit.SECONDS,</span><br><span class="line">                                  <span class="keyword">new</span> SynchronousQueue&lt;Runnable&gt;());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p> 这里先不说有什么区别，它们最终都会导向这个构造方法：</p>
@@ -505,11 +542,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/blog/2018/05/16/2018-05-16-SpringbootApplication/" rel="prev" title="「Springboot」Springboot启动程序简单介绍">
+    <a href="/2018/05/16/2018-05-16-SpringbootApplication/" rel="prev" title="「Springboot」Springboot启动程序简单介绍">
       <i class="fa fa-chevron-left"></i> 「Springboot」Springboot启动程序简单介绍
     </a></div>
       <div class="post-nav-item">
-    <a href="/blog/2018/05/18/2018-05-18-thissync/" rel="next" title="「Spring」透过现象看原理：详解Spring中Bean的this调用导致 AOP 失效的原因">
+    <a href="/2018/05/18/2018-05-18-thissync/" rel="next" title="「Spring」透过现象看原理：详解Spring中Bean的this调用导致 AOP 失效的原因">
       「Spring」透过现象看原理：详解Spring中Bean的this调用导致 AOP 失效的原因 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -582,17 +619,17 @@
   </div>
 
   
-  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
 
-<script src="/blog/js/utils.js"></script>
+<script src="/js/utils.js"></script>
 
-<script src="/blog/js/motion.js"></script>
-
-
-<script src="/blog/js/schemes/muse.js"></script>
+<script src="/js/motion.js"></script>
 
 
-<script src="/blog/js/next-boot.js"></script>
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
 
 
   

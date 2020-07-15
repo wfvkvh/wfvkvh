@@ -5,36 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/blog/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
   
-  <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"cc7lx2lzfbv2sb6bi.gitee.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+    var CONFIG = {"hostname":"cc7lx2lzfbv2sb6bi.gitee.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="创建数据库 1CREATE DATABASE database_name; 查看创建好的数据库 12SHOW DATABASE database_name;SHOW DATABASES; 删除数据库 1DROP DATABASE database_name; 查看数据库引擎 1SHOW ENGINES; 查看默认引擎 1SHOW VARIABLES LIKE &#39;%storage_engine%&#39;">
+  <meta name="description" content="创建数据库1CREATE DATABASE database_name;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「数据库」MySQL基础语法">
 <meta property="og:url" content="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/14/2018-05-13-mysqlbase/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="创建数据库 1CREATE DATABASE database_name; 查看创建好的数据库 12SHOW DATABASE database_name;SHOW DATABASES; 删除数据库 1DROP DATABASE database_name; 查看数据库引擎 1SHOW ENGINES; 查看默认引擎 1SHOW VARIABLES LIKE &#39;%storage_engine%&#39;">
+<meta property="og:site_name" content="迷迭香">
+<meta property="og:description" content="创建数据库1CREATE DATABASE database_name;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/assets/img/20180513/2.jpg">
+<meta property="og:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180513/2.jpg">
 <meta property="article:published_time" content="2018-05-13T16:16:45.147Z">
-<meta property="article:modified_time" content="2018-05-13T16:16:45.147Z">
+<meta property="article:modified_time" content="2020-07-15T09:49:34.738Z">
 <meta property="article:author" content="Rosemarry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/assets/img/20180513/2.jpg">
+<meta name="twitter:image" content="http://cc7lx2lzfbv2sb6bi.gitee.io/img/20180513/2.jpg">
 
 <link rel="canonical" href="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/14/2018-05-13-mysqlbase/">
 
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>「数据库」MySQL基础语法 | Hexo</title>
+  <title>「数据库」MySQL基础语法 | 迷迭香</title>
   
 
 
@@ -103,14 +103,17 @@
         <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
-    <a href="/blog/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">迷迭香</h1>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -123,6 +126,20 @@
 
 
 
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
 
 
 
@@ -161,7 +178,8 @@
 <div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/blog/archives">
+          <a href="/archives/">
+        
           <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
@@ -203,13 +221,13 @@
     <link itemprop="mainEntityOfPage" href="http://cc7lx2lzfbv2sb6bi.gitee.io/blog/2018/05/14/2018-05-13-mysqlbase/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.gif">
       <meta itemprop="name" content="Rosemarry">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="迷迭香">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -225,6 +243,13 @@
 
               <time title="Created: 2018-05-14 00:16:45" itemprop="dateCreated datePublished" datetime="2018-05-14T00:16:45+08:00">2018-05-14</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-15 17:49:34" itemprop="dateModified" datetime="2020-07-15T17:49:34+08:00">2020-07-15</time>
+              </span>
 
           
 
@@ -238,8 +263,13 @@
 
       
         <ol>
-<li><p>创建数据库</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> database_name;</span><br></pre></td></tr></table></figure></li>
+<li>创建数据库<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> database_name;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<a id="more"></a>
+
+<ol start="2">
 <li><p>查看创建好的数据库</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">DATABASE</span> database_name;</span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">DATABASES</span>;</span><br></pre></td></tr></table></figure></li>
 <li><p>删除数据库</p>
@@ -294,7 +324,7 @@
 </li>
 <li><p>运算符     </p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 算术运算符 加减乘除取余数</span></span><br><span class="line"><span class="keyword">SELECT</span> tb_id+<span class="number">1</span>,tb_id+<span class="number">3</span><span class="number">-5</span>,tb_id<span class="number">-4</span>+<span class="number">9</span> <span class="keyword">FROM</span> tb_a;</span><br></pre></td></tr></table></figure>
-<p>比较运算符<br><img src="/assets/img/20180513/2.jpg" alt="">{:height=”100%” width=”100%”}</p>
+<p>比较运算符<br><img src="/img/20180513/2.jpg" alt="">{:height=”100%” width=”100%”}</p>
 </li>
 <li><p>group by + having + limit</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT id,SUM(price),GROUP_CONCAT(name) FROM tb_fruit WHERE id&gt;0 GROUP BY id HAVING COUNT(name)&gt;1 ORDER BY name DESC LIMIT 4,3;</span><br><span class="line">SELECT * FROM tb_fruit WHERE id&gt;0 GROUP BY id,name;</span><br></pre></td></tr></table></figure>
@@ -315,11 +345,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/blog/2018/05/13/2018-05-10-DeclarParent/" rel="prev" title="「Spring」DeclareParents注释声明对象的AOP错误">
+    <a href="/2018/05/13/2018-05-10-DeclarParent/" rel="prev" title="「Spring」DeclareParents注释声明对象的AOP错误">
       <i class="fa fa-chevron-left"></i> 「Spring」DeclareParents注释声明对象的AOP错误
     </a></div>
       <div class="post-nav-item">
-    <a href="/blog/2018/05/14/2018-05-14-aqs/" rel="next" title="「并发」Java并发之AQS">
+    <a href="/2018/05/14/2018-05-14-aqs/" rel="next" title="「并发」Java并发之AQS">
       「并发」Java并发之AQS <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -392,17 +422,17 @@
   </div>
 
   
-  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
 
-<script src="/blog/js/utils.js"></script>
+<script src="/js/utils.js"></script>
 
-<script src="/blog/js/motion.js"></script>
-
-
-<script src="/blog/js/schemes/muse.js"></script>
+<script src="/js/motion.js"></script>
 
 
-<script src="/blog/js/next-boot.js"></script>
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
 
 
   

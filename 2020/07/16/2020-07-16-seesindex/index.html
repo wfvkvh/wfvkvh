@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="JSR 规范Spring 出现于2003年，是对早期 J2EE 规范的复杂性的响应。虽然有些人认为 javaee 和 Spring 是竞争对手，但实际上 Spring 是 javaee 的补充。Spring 编程模型并不包含 Java EE 平台规范; 相反，它集成了来自 EE 平台的精心挑选的个别规范:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Spring」Spring实现的EE规范和Spring的设计哲学">
+<meta property="og:url" content="https://rosemarry7.github.io/blog/2020/07/16/2020-07-16-seesindex/index.html">
+<meta property="og:site_name" content="迷迭香">
+<meta property="og:description" content="JSR 规范Spring 出现于2003年，是对早期 J2EE 规范的复杂性的响应。虽然有些人认为 javaee 和 Spring 是竞争对手，但实际上 Spring 是 javaee 的补充。Spring 编程模型并不包含 Java EE 平台规范; 相反，它集成了来自 EE 平台的精心挑选的个别规范:">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-16T09:26:14.000Z">
+<meta property="article:modified_time" content="2020-07-16T09:33:16.012Z">
+<meta property="article:author" content="Rosemarry">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://rosemarry7.github.io/blog/2020/07/16/2020-07-16-seesindex/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>「Spring」Spring实现的EE规范和Spring的设计哲学 | 迷迭香</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">迷迭香</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/blog/2020/07/16/2020-07-16-seesindex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Rosemarry">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="迷迭香">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「Spring」Spring实现的EE规范和Spring的设计哲学
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-07-16 17:26:14 / Modified: 17:33:16" itemprop="dateCreated datePublished" datetime="2020-07-16T17:26:14+08:00">2020-07-16</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="JSR-规范"><a href="#JSR-规范" class="headerlink" title="JSR 规范"></a>JSR 规范</h2><p>Spring 出现于2003年，是对早期 J2EE 规范的复杂性的响应。虽然有些人认为 javaee 和 Spring 是竞争对手，但实际上 Spring 是 javaee 的补充。Spring 编程模型并不包含 Java EE 平台规范; 相反，它集成了来自 EE 平台的精心挑选的个别规范: </p>
+<a id="more"></a>
+
+<blockquote>
+<p>Concurrency Utilities (JSR 236)</p>
+</blockquote>
+<blockquote>
+<p>Common Annotations (JSR 250) </p>
+</blockquote>
+<blockquote>
+<p>Bean Validation (JSR 303)</p>
+</blockquote>
+<blockquote>
+<p>Dependency Injection (JSR 330) </p>
+</blockquote>
+<blockquote>
+<p>JPA (JSR 338)</p>
+</blockquote>
+<blockquote>
+<p>Servlet API (JSR 340)</p>
+</blockquote>
+<blockquote>
+<p>WebSocket API (JSR 356)</p>
+</blockquote>
+<blockquote>
+<p>JSON Binding API (JSR 367)</p>
+</blockquote>
+<blockquote>
+<p>JMS (JSR 914)</p>
+</blockquote>
+<blockquote>
+<p>as well as JTA/JCA setups for transaction coordination, if necessary.</p>
+</blockquote>
+<h2 id="Spring-的设计哲学"><a href="#Spring-的设计哲学" class="headerlink" title="Spring 的设计哲学"></a>Spring 的设计哲学</h2><p>When you learn about a framework, it’s important to know not only what it does but what principles it follows. Here are the guiding principles of the Spring Framework:</p>
+<ul>
+<li><p>当你了解一个框架时，重要的是不仅要知道它是做什么的，还要知道它遵循什么原则。以下是 Spring 框架的指导原则:</p>
+</li>
+<li><p>Provide choice at every level. Spring lets you defer design decisions as late as possible. For example, you can switch persistence providers through configuration without changing your code. The same is true for many other infrastructure concerns and integration with third-party APIs.</p>
+</li>
+<li><p>在每个层面提供选择。Spring 允许您尽可能晚地推迟设计决策。例如，您可以通过配置切换持久性提供程序，而无需更改代码。许多其他基础设施关注点和与第三方 api 的集成也是如此。</p>
+</li>
+<li><p>Accommodate diverse perspectives. Spring embraces flexibility and is not opinionated about how things should be done. It supports a wide range of application needs with different perspectives.</p>
+</li>
+<li><p>容纳不同的观点。Spring 支持灵活性，不固执己见地认为应该如何做事。它以不同的视角支持广泛的应用需求。</p>
+</li>
+<li><p>Maintain strong backward compatibility. Spring’s evolution has been carefully managed to force few breaking changes between versions. Spring supports a carefully chosen range of JDK versions and third-party libraries to facilitate maintenance of applications and libraries that depend on Spring.</p>
+</li>
+<li><p>保持强壮的向下兼容。Spring 的演变经过了精心的管理，在不同版本之间几乎没有突破性的变化。Spring 支持精心选择的一系列 JDK 版本和第三方库，以促进依赖于 Spring 的应用程序和库的维护。</p>
+</li>
+<li><p>Care about API design. The Spring team puts a lot of thought and time into making APIs that are intuitive and that hold up across many versions and many years.</p>
+</li>
+<li><p>关心 API 设计。Spring 团队花费了大量的思想和时间来制作直观的 api，这些 api 可以支持多个版本和多年。</p>
+</li>
+<li><p>Set high standards for code quality. The Spring Framework puts a strong emphasis on meaningful, current, and accurate javadoc. It is one of very few projects that can claim clean code structure with no circular dependencies between packages.</p>
+</li>
+<li><p>为代码质量设置高标准。Spring 框架强调有意义的、当前的和准确的 javadoc。它是少数几个可以声称代码结构清晰、包之间没有循环依赖关系的项目之一。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/07/14/2020-07-14-iocdi/" rel="prev" title="Inversion of Control Containers and the Dependency Injection pattern （IoC容器和Dependency Injection模式）">
+      <i class="fa fa-chevron-left"></i> Inversion of Control Containers and the Dependency Injection pattern （IoC容器和Dependency Injection模式）
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSR-规范"><span class="nav-number">1.</span> <span class="nav-text">JSR 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-的设计哲学"><span class="nav-number">2.</span> <span class="nav-text">Spring 的设计哲学</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Rosemarry</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rosemarry</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/blog/js/utils.js"></script>
+
+<script src="/blog/js/motion.js"></script>
+
+
+<script src="/blog/js/schemes/muse.js"></script>
+
+
+<script src="/blog/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

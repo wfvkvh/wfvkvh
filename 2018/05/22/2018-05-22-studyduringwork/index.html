@@ -14,12 +14,10 @@
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
-  
-  <link rel="stylesheet" href="/blog/lib/animate-css/animate.min.css">
 
-<script class="hexo-configurations">
+<script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/blog/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="文章来自美团-刘丁  引言古人云：“活到老，学到老。”互联网算是最辛苦的行业之一，“加班”对工程师来说已是“家常便饭”，同时互联网技术又日新月异，很多工程师都疲于应付，叫苦不堪。以至于长期以来流传一个很广的误解：35岁是程序员工作的终点。">
@@ -39,7 +37,7 @@
 <link rel="canonical" href="https://rosemarry7.github.io/blog/2018/05/22/2018-05-22-studyduringwork/">
 
 
-<script class="page-configurations">
+<script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -59,36 +57,24 @@
 
   <noscript>
   <style>
-  body { margin-top: 2rem; }
-
+  .use-motion .brand,
   .use-motion .menu-item,
-  .use-motion .sidebar,
+  .sidebar-inner,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
+  .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
 
@@ -98,23 +84,22 @@
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <main class="main">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><div class="site-brand-container">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
-        <span class="toggle-line toggle-line-first"></span>
-        <span class="toggle-line toggle-line-middle"></span>
-        <span class="toggle-line toggle-line-last"></span>
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/blog/" class="brand" rel="start">
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">迷迭香</h1>
-      <i class="logo-line"></i>
+      <span class="logo-line-after"><i></i></span>
     </a>
   </div>
 
@@ -123,6 +108,7 @@
     </div>
   </div>
 </div>
+
 
 
 
@@ -145,75 +131,22 @@
 
 
 </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
+    </header>
 
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何学习"><span class="nav-number">2.</span> <span class="nav-text">如何学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#贵在坚持"><span class="nav-number">2.1.</span> <span class="nav-text">贵在坚持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视实践"><span class="nav-number">2.2.</span> <span class="nav-text">重视实践</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视交流"><span class="nav-number">2.3.</span> <span class="nav-text">重视交流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视总结和输出"><span class="nav-number">2.4.</span> <span class="nav-text">重视总结和输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视规划"><span class="nav-number">2.5.</span> <span class="nav-text">重视规划</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#长期规划"><span class="nav-number">2.5.1.</span> <span class="nav-text">长期规划</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#短期规划"><span class="nav-number">2.5.2.</span> <span class="nav-text">短期规划</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#那些令人纠结的困惑"><span class="nav-number">2.6.</span> <span class="nav-text">那些令人纠结的困惑</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#学无止境吗"><span class="nav-number">2.6.1.</span> <span class="nav-text">学无止境吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#没有绝对高明的技术，只有真正的高手"><span class="nav-number">2.6.2.</span> <span class="nav-text">没有绝对高明的技术，只有真正的高手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#不做项目就无法成长吗"><span class="nav-number">2.6.3.</span> <span class="nav-text">不做项目就无法成长吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#职责真的很小吗"><span class="nav-number">2.6.4.</span> <span class="nav-text">职责真的很小吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#一定要当老大吗"><span class="nav-number">2.6.5.</span> <span class="nav-text">一定要当老大吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#平台化的传说"><span class="nav-number">2.6.6.</span> <span class="nav-text">平台化的传说</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#搞基础技术就一定很牛吗"><span class="nav-number">2.6.7.</span> <span class="nav-text">搞基础技术就一定很牛吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可行性调研的那些坑"><span class="nav-number">2.6.8.</span> <span class="nav-text">可行性调研的那些坑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#工程师天生不善沟通吗"><span class="nav-number">2.6.9.</span> <span class="nav-text">工程师天生不善沟通吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#带人之道"><span class="nav-number">2.6.10.</span> <span class="nav-text">带人之道</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#效率、效率、效率"><span class="nav-number">2.6.11.</span> <span class="nav-text">效率、效率、效率</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构师能力模型"><span class="nav-number">3.</span> <span class="nav-text">架构师能力模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编程能力"><span class="nav-number">3.1.</span> <span class="nav-text">编程能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调试能力"><span class="nav-number">3.2.</span> <span class="nav-text">调试能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译部署能力"><span class="nav-number">3.3.</span> <span class="nav-text">编译部署能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能优化能力"><span class="nav-number">3.4.</span> <span class="nav-text">性能优化能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在线运维能力"><span class="nav-number">3.5.</span> <span class="nav-text">在线运维能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#业务架构能力"><span class="nav-number">3.6.</span> <span class="nav-text">业务架构能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目管理能力"><span class="nav-number">3.7.</span> <span class="nav-text">项目管理能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#团队管理能力"><span class="nav-number">3.8.</span> <span class="nav-text">团队管理能力</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Rosemarry</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/blog/archives/">
-        
-          <span class="site-state-item-count">22</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-  </nav>
-</div>
-
-
-
-      </section>
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </header>
-
-      
+    
   <div class="back-to-top">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
-<noscript>
-  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
-
+    <main class="main">
       <div class="main-inner">
-        
-
-        <div class="content post posts-expand">
+        <div class="content-wrap">
           
+
+          <div class="content post posts-expand">
+            
 
     
   
@@ -547,8 +480,8 @@
 
 
 
-        </div>
-        
+          </div>
+          
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -572,6 +505,59 @@
   }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何学习"><span class="nav-number">2.</span> <span class="nav-text">如何学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#贵在坚持"><span class="nav-number">2.1.</span> <span class="nav-text">贵在坚持</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视实践"><span class="nav-number">2.2.</span> <span class="nav-text">重视实践</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视交流"><span class="nav-number">2.3.</span> <span class="nav-text">重视交流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视总结和输出"><span class="nav-number">2.4.</span> <span class="nav-text">重视总结和输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视规划"><span class="nav-number">2.5.</span> <span class="nav-text">重视规划</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#长期规划"><span class="nav-number">2.5.1.</span> <span class="nav-text">长期规划</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#短期规划"><span class="nav-number">2.5.2.</span> <span class="nav-text">短期规划</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#那些令人纠结的困惑"><span class="nav-number">2.6.</span> <span class="nav-text">那些令人纠结的困惑</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#学无止境吗"><span class="nav-number">2.6.1.</span> <span class="nav-text">学无止境吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#没有绝对高明的技术，只有真正的高手"><span class="nav-number">2.6.2.</span> <span class="nav-text">没有绝对高明的技术，只有真正的高手</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#不做项目就无法成长吗"><span class="nav-number">2.6.3.</span> <span class="nav-text">不做项目就无法成长吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#职责真的很小吗"><span class="nav-number">2.6.4.</span> <span class="nav-text">职责真的很小吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#一定要当老大吗"><span class="nav-number">2.6.5.</span> <span class="nav-text">一定要当老大吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#平台化的传说"><span class="nav-number">2.6.6.</span> <span class="nav-text">平台化的传说</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#搞基础技术就一定很牛吗"><span class="nav-number">2.6.7.</span> <span class="nav-text">搞基础技术就一定很牛吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#可行性调研的那些坑"><span class="nav-number">2.6.8.</span> <span class="nav-text">可行性调研的那些坑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#工程师天生不善沟通吗"><span class="nav-number">2.6.9.</span> <span class="nav-text">工程师天生不善沟通吗</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#带人之道"><span class="nav-number">2.6.10.</span> <span class="nav-text">带人之道</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#效率、效率、效率"><span class="nav-number">2.6.11.</span> <span class="nav-text">效率、效率、效率</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#架构师能力模型"><span class="nav-number">3.</span> <span class="nav-text">架构师能力模型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编程能力"><span class="nav-number">3.1.</span> <span class="nav-text">编程能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调试能力"><span class="nav-number">3.2.</span> <span class="nav-text">调试能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#编译部署能力"><span class="nav-number">3.3.</span> <span class="nav-text">编译部署能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能优化能力"><span class="nav-number">3.4.</span> <span class="nav-text">性能优化能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在线运维能力"><span class="nav-number">3.5.</span> <span class="nav-text">在线运维能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#业务架构能力"><span class="nav-number">3.6.</span> <span class="nav-text">业务架构能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目管理能力"><span class="nav-number">3.7.</span> <span class="nav-text">项目管理能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#团队管理能力"><span class="nav-number">3.8.</span> <span class="nav-text">团队管理能力</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Rosemarry</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
       </div>
     </main>
 
@@ -590,7 +576,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Rosemarry</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
         
@@ -608,6 +594,8 @@
 
   
   <script src="/blog/lib/anime.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.min.js"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
 
 <script src="/blog/js/utils.js"></script>
 
@@ -618,6 +606,8 @@
 
 
 <script src="/blog/js/next-boot.js"></script>
+
+
 
 
   

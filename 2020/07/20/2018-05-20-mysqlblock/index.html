@@ -5,41 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 4.2.1">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/blog/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/blog/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/blog/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="本文转自 潇湘隐者  在MySQL数据库中出现了阻塞问题，如何快速查找定位问题根源？在实验开始前，我们先梳理一下有什么工具或命令查看MySQL的阻塞，另外，我们也要一一对比其优劣，因为有些命令可能在实际环境下可能并不适用。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「数据库」MySQL Innodb如何找出阻塞事务源头SQL">
-<meta property="og:url" content="https://rosemarry7.github.io/blog/2018/05/20/2018-05-20-mysqlblock/index.html">
-<meta property="og:site_name" content="迷迭香">
+<meta property="og:url" content="https://rosemarry7.github.io/rosemarry7/2020/07/20/2018-05-20-mysqlblock/index.html">
+<meta property="og:site_name" content="Rosemarry">
 <meta property="og:description" content="本文转自 潇湘隐者  在MySQL数据库中出现了阻塞问题，如何快速查找定位问题根源？在实验开始前，我们先梳理一下有什么工具或命令查看MySQL的阻塞，另外，我们也要一一对比其优劣，因为有些命令可能在实际环境下可能并不适用。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180520/12.png">
-<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180520/13.png">
-<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180520/14.png">
-<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180520/15.png">
-<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180520/16.png">
-<meta property="og:image" content="https://rosemarry7.github.io/blog/images/20180520/17.png">
-<meta property="article:published_time" content="2018-05-20T09:09:46.109Z">
-<meta property="article:modified_time" content="2020-07-15T10:59:29.591Z">
-<meta property="article:author" content="Rosemarry">
+<meta property="og:image" content="https://rosemarry7.github.io/images/20180520/12.png">
+<meta property="og:image" content="https://rosemarry7.github.io/images/20180520/13.png">
+<meta property="og:image" content="https://rosemarry7.github.io/images/20180520/14.png">
+<meta property="og:image" content="https://rosemarry7.github.io/images/20180520/15.png">
+<meta property="og:image" content="https://rosemarry7.github.io/images/20180520/16.png">
+<meta property="og:image" content="https://rosemarry7.github.io/images/20180520/17.png">
+<meta property="article:published_time" content="2020-07-20T00:56:44.276Z">
+<meta property="article:modified_time" content="2020-07-20T00:56:44.277Z">
+<meta property="article:author" content="LaoZ">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://rosemarry7.github.io/blog/images/20180520/12.png">
+<meta name="twitter:image" content="https://rosemarry7.github.io/images/20180520/12.png">
 
-<link rel="canonical" href="https://rosemarry7.github.io/blog/2018/05/20/2018-05-20-mysqlblock/">
+<link rel="canonical" href="https://rosemarry7.github.io/rosemarry7/2020/07/20/2018-05-20-mysqlblock/">
 
 
 <script id="page-configurations">
@@ -52,7 +52,7 @@
   };
 </script>
 
-  <title>「数据库」MySQL Innodb如何找出阻塞事务源头SQL | 迷迭香</title>
+  <title>「数据库」MySQL Innodb如何找出阻塞事务源头SQL | Rosemarry</title>
   
 
 
@@ -101,9 +101,9 @@
 
   <div class="site-meta">
 
-    <a href="/blog/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">迷迭香</h1>
+      <h1 class="site-title">Rosemarry</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -121,12 +121,12 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/blog/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/blog/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -157,16 +157,16 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/blog/2018/05/20/2018-05-20-mysqlblock/">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2020/07/20/2018-05-20-mysqlblock/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="Rosemarry">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LaoZ">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="迷迭香">
+      <meta itemprop="name" content="Rosemarry">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -180,15 +180,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-05-20 17:09:46" itemprop="dateCreated datePublished" datetime="2018-05-20T17:09:46+08:00">2018-05-20</time>
+              <time title="Created: 2020-07-20 08:56:44" itemprop="dateCreated datePublished" datetime="2020-07-20T08:56:44+08:00">2020-07-20</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-15 18:59:29" itemprop="dateModified" datetime="2020-07-15T18:59:29+08:00">2020-07-15</time>
-              </span>
 
           
 
@@ -225,18 +218,18 @@
 <p>在第三个连接会话执行下面命令，查看TRANSACTIONS相关信息：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show engine innodb status\G;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/blog/images/20180520/12.png" alt=""></p>
+<p><img src="/images/20180520/12.png" alt=""></p>
 <p>使用show engine innodb status命令后，可以查看其输出的TRANSACTIONS部分信息，如上截图所示，找到类似TRX HAS BEEN WATING …部分的信息，</p>
 <p>通过那部分信息，我们可以看到update test_blocking set name=’kk’ where id=1这个SQL语句被阻塞了14秒，一直在等待获取X Lock。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">TRANSACTIONS</span><br><span class="line"></span><br><span class="line"><span class="comment">------------</span></span><br><span class="line"></span><br><span class="line">Trx id counter 148281  <span class="comment">#下一个事务ID</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">Purge</span> done <span class="keyword">for</span> trx<span class="string">'s n:o &lt; 148273 undo n:o &lt; 0 state: running but idle</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">History list length 552</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">LIST OF TRANSACTIONS FOR EACH SESSION:</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">---TRANSACTION 0, not started</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">MySQL thread id 15, OS thread handle 0x4cc64940, query id 261 localhost root cleaning up</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">---TRANSACTION 0, not started</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">MySQL thread id 14, OS thread handle 0x4cbe2940, query id 278 localhost root init</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">show engine innodb status</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">---TRANSACTION 148280, ACTIVE 24 sec</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">2 lock struct(s), heap size 360, 1 row lock(s)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">MySQL thread id 8, OS thread handle 0x4cba1940, query id 276 localhost root cleaning up</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">---TRANSACTION 148279, ACTIVE 313 sec starting index read</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mysql tables in use 1, locked 1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">LOCK WAIT 2 lock struct(s), heap size 360, 1 row lock(s)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">MySQL thread id 9, OS thread handle 0x4cc23940, query id 277 localhost root updating  #线程ID为9， 操作系统线程句柄为0x4cc23940， 查询ID为277，账号为root的UPDATE操作</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">update test_blocking set name='</span>kk<span class="string">' where id=1  #具体SQL语句</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">------- TRX HAS BEEN WAITING 14 SEC FOR THIS LOCK TO BE GRANTED:  #TRX等待授予锁已经有14秒了</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">RECORD LOCKS space id 337 page no 3 n bits 72 index `PRIMARY` of table `MyDB`.`test_blocking` trx id 148279 lock_mode X locks rec but not gap waiting</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#在space id=337（test_blocking表的表空间），page no=3的页上，表test_blocking上的主键索引在等待X锁</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Record lock, heap no 2 PHYSICAL RECORD: n_fields 4; compact format; info bits 0</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> 0: len 4; hex 80000001; asc     ;;            #第一个字段是主键，制度按长为4，值为1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> 1: len 6; hex 000000024322; asc     C";;      #该字段为6个字节的事务id，这个id表示最近一次被更新的事务id（对应十进制为148258）</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> 2: len 7; hex 9a000001f20110; asc        ;;   #该字段为7个字节的回滚指针，用于mvcc</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"> 3: len 5; hex 6b65727279; asc kerry;;         #该字段表示的是此记录的第二个字段，长度为5，值为kerry（如果表有多个字段，那么此处后面还有记录）</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/blog/images/20180520/13.png" alt=""></p>
+<p><img src="/images/20180520/13.png" alt=""></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from information_schema.INNODB_SYS_DATAFILES where space=337;</span><br><span class="line">+<span class="comment">-------+--------------------------+</span></span><br><span class="line">| SPACE | PATH                     |</span><br><span class="line">+<span class="comment">-------+--------------------------+</span></span><br><span class="line">|   337 | ./MyDB/test_blocking.ibd |</span><br><span class="line">+<span class="comment">-------+--------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/blog/images/20180520/14.png" alt=""></p>
+<p><img src="/images/20180520/14.png" alt=""></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from information_schema.INNODB_SYS_DATAFILES where space=337;</span><br><span class="line">+<span class="comment">-------+--------------------------+</span></span><br><span class="line">| SPACE | PATH                     |</span><br><span class="line">+<span class="comment">-------+--------------------------+</span></span><br><span class="line">|   337 | ./MyDB/test_blocking.ibd |</span><br><span class="line">+<span class="comment">-------+--------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="2-Innotop工具"><a href="#2-Innotop工具" class="headerlink" title="2: Innotop工具"></a>2: Innotop工具</h3><p><img src="/blog/images/20180520/15.png" alt=""></p>
+<h3 id="2-Innotop工具"><a href="#2-Innotop工具" class="headerlink" title="2: Innotop工具"></a>2: Innotop工具</h3><p><img src="/images/20180520/15.png" alt=""></p>
 <p>如下所示，Innotop工具很多情况下也不能定位到阻塞的语句（Blocking Query）， 也仅仅能获取一些锁相关信息</p>
 <h3 id="3-通过查询information-schema数据库下与事务相关的几个系统表"><a href="#3-通过查询information-schema数据库下与事务相关的几个系统表" class="headerlink" title="3: 通过查询information_schema数据库下与事务相关的几个系统表"></a>3: 通过查询information_schema数据库下与事务相关的几个系统表</h3><p>还是构造之前的测试案例，在第一个会话中使用SELECT FOR UPDATE锁定其中一行记录</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use MyDB;</span><br><span class="line">Database changed</span><br><span class="line">mysql&gt;  set session autocommit=0;</span><br><span class="line">Query OK, 0 rows affected (0.00 sec)</span><br><span class="line">mysql&gt; select connection_id() from dual;</span><br><span class="line">+<span class="comment">-----------------+</span></span><br><span class="line">| connection_id() |</span><br><span class="line">+<span class="comment">-----------------+</span></span><br><span class="line">|              17 |</span><br><span class="line">+<span class="comment">-----------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> test_blocking <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span> <span class="keyword">for</span> <span class="keyword">update</span>;</span><br><span class="line">+<span class="comment">----+-------+</span></span><br><span class="line">| id | name  |</span><br><span class="line">+<span class="comment">----+-------+</span></span><br><span class="line">|  1 | kerry |</span><br><span class="line">+<span class="comment">----+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
@@ -248,11 +241,11 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> b.trx_mysql_thread_id             <span class="keyword">AS</span> <span class="string">'blocked_thread_id'</span></span><br><span class="line">      ,b.trx_query                      <span class="keyword">AS</span> <span class="string">'blocked_sql_text'</span></span><br><span class="line">      ,c.trx_mysql_thread_id             <span class="keyword">AS</span> <span class="string">'blocker_thread_id'</span></span><br><span class="line">      ,c.trx_query                       <span class="keyword">AS</span> <span class="string">'blocker_sql_text'</span></span><br><span class="line">      ,( <span class="keyword">Unix_timestamp</span>() - <span class="keyword">Unix_timestamp</span>(c.trx_started) )</span><br><span class="line">                              <span class="keyword">AS</span> <span class="string">'blocked_time'</span></span><br><span class="line"><span class="keyword">FROM</span>   information_schema.innodb_lock_waits a</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> information_schema.innodb_trx b</span><br><span class="line">         <span class="keyword">ON</span> a.requesting_trx_id = b.trx_id</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> information_schema.innodb_trx c</span><br><span class="line">         <span class="keyword">ON</span> a.blocking_trx_id = c.trx_id</span><br><span class="line"><span class="keyword">WHERE</span>  ( <span class="keyword">Unix_timestamp</span>() - <span class="keyword">Unix_timestamp</span>(c.trx_started) ) &gt; <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> a.sql_text,</span><br><span class="line">       c.id,</span><br><span class="line">       d.trx_started</span><br><span class="line"><span class="keyword">FROM</span>   performance_schema.events_statements_current a</span><br><span class="line">       <span class="keyword">join</span> performance_schema.threads b</span><br><span class="line">         <span class="keyword">ON</span> a.thread_id = b.thread_id</span><br><span class="line">       <span class="keyword">join</span> information_schema.processlist c</span><br><span class="line">         <span class="keyword">ON</span> b.processlist_id = c.id</span><br><span class="line">       <span class="keyword">join</span> information_schema.innodb_trx d</span><br><span class="line">         <span class="keyword">ON</span> c.id = d.trx_mysql_thread_id</span><br><span class="line"><span class="keyword">where</span> c.id=<span class="number">17</span></span><br><span class="line"><span class="keyword">ORDER</span>  <span class="keyword">BY</span> d.trx_started\G;</span><br></pre></td></tr></table></figure>
 
 <p>如下截图所示，第一个SQL语句能够查到线程19 被线程 17阻塞了， 被阻塞的SQL语句为“update test_blocking set name=’kk’ where id=1;”, 能够查到被阻塞了多长时间，但是无法查到源头SQL语句。此时就需要第二个SQL语句登场，找到源头语句。</p>
-<p><img src="/blog/images/20180520/16.png" alt=""></p>
+<p><img src="/images/20180520/16.png" alt=""></p>
 <p>但是不要太天真的认为第二个SQL语句能够获取所有场景下的阻塞源头SQL语句，实际业务场景，会话可能在执行一个存储过程或复杂的业务，有可能它执行完阻塞源头SQL后，继续在执行其它SQL语句，此时，你抓取的是这个连接会话最后执行的SQL语句，如下所示，我简单构造了一个例子。就能构造这样的一个场景。这个我曾经写过一篇博客“<a href="http://www.cnblogs.com/kerrycode/p/5821413.html" target="_blank" rel="noopener">为什么数据库有时候不能定位阻塞（Blocker）源头的SQL语句</a>”，分析SQL Server和ORACLE 定位查找阻塞源头SQL语句，现在看来真是大道同源，殊途同归。</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from test_blocking where id=1 for update;</span><br><span class="line">+<span class="comment">----+-------+</span></span><br><span class="line">| id | name  |</span><br><span class="line">+<span class="comment">----+-------+</span></span><br><span class="line">|  1 | kerry |</span><br><span class="line">+<span class="comment">----+-------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">delete</span> <span class="keyword">from</span> student <span class="keyword">where</span> stu_id=<span class="number">1001</span>;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/blog/images/20180520/17.png" alt=""></p>
+<p><img src="/images/20180520/17.png" alt=""></p>
 <p>总结： 最简单、方便的还是上面两个SQL查询定位blocker的SQL语句，但是需要注意：有时候它也查不到真正阻塞的源头SQL语句。所以还需结合应用程序代码与上下文环境进行整体分析、判断！</p>
 
     </div>
@@ -269,12 +262,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/blog/2018/05/19/2018-05-18-studingstyle/" rel="prev" title="「学习方法」学习驱动力">
-      <i class="fa fa-chevron-left"></i> 「学习方法」学习驱动力
+    <a href="/2020/07/20/2018-05-17-excutor/" rel="prev" title="「并发」深度解读Java线程池设计思想及源码实现">
+      <i class="fa fa-chevron-left"></i> 「并发」深度解读Java线程池设计思想及源码实现
     </a></div>
       <div class="post-nav-item">
-    <a href="/blog/2018/05/21/2018-05-21-mybatisognl/" rel="next" title="「MyBatis」MyBatis中的OGNL用法">
-      「MyBatis」MyBatis中的OGNL用法 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/20/2018-05-22-studyduringwork/" rel="next" title="「学习」工作中如何做好技术积累">
+      「学习」工作中如何做好技术积累 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -340,15 +333,15 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Rosemarry</p>
+  <p class="site-author-name" itemprop="name">LaoZ</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/blog/archives/">
+          <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -380,7 +373,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Rosemarry</span>
+  <span class="author" itemprop="copyrightHolder">LaoZ</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
@@ -399,19 +392,19 @@
   </div>
 
   
-  <script src="/blog/lib/anime.min.js"></script>
-  <script src="/blog/lib/velocity/velocity.min.js"></script>
-  <script src="/blog/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/blog/js/utils.js"></script>
+<script src="/js/utils.js"></script>
 
-<script src="/blog/js/motion.js"></script>
-
-
-<script src="/blog/js/schemes/muse.js"></script>
+<script src="/js/motion.js"></script>
 
 
-<script src="/blog/js/next-boot.js"></script>
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
 
 
 

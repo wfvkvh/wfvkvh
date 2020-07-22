@@ -506,7 +506,7 @@ pre {
 }
 pre,
 code {
-  font-family: 'Source Code Pro', consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei";
+  font-family: 'Roboto Slab', consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei";
 }
 code {
   border-radius: 3px;
@@ -2609,7 +2609,7 @@ ul.breadcrumb li + li:last-child {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff0054;
+  background: #66ff69;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);

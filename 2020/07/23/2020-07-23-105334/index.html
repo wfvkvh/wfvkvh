@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="摘要Spring的依赖注入是一系列复杂操作的集合，这些复杂操作中，伴随了一些非常零碎的知识和Spring的特性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Spring」Spring的依赖注入前奏(一)">
+<meta property="og:url" content="https://rosemarry7.github.io/rosemarry7/2020/07/23/2020-07-23-105334/index.html">
+<meta property="og:site_name" content="Rosemarry">
+<meta property="og:description" content="摘要Spring的依赖注入是一系列复杂操作的集合，这些复杂操作中，伴随了一些非常零碎的知识和Spring的特性。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-23T02:53:55.710Z">
+<meta property="article:modified_time" content="2020-07-24T09:36:43.583Z">
+<meta property="article:author" content="LaoZ">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://rosemarry7.github.io/rosemarry7/2020/07/23/2020-07-23-105334/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>「Spring」Spring的依赖注入前奏(一) | Rosemarry</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Rosemarry" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Rosemarry</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不能被实例化的类"><span class="nav-number">2.</span> <span class="nav-text">不能被实例化的类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanPostProcessor接口"><span class="nav-number">3.</span> <span class="nav-text">BeanPostProcessor接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AccessController-doPrivileged-方法"><span class="nav-number">4.</span> <span class="nav-text">AccessController.doPrivileged()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGLib"><span class="nav-number">5.</span> <span class="nav-text">CGLib</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-PostConstruct-和-PreDestroy-指定生命周期回调方法"><span class="nav-number">6.</span> <span class="nav-text">使用 @PostConstruct 和 @PreDestroy 指定生命周期回调方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Required-进行-Bean-的依赖检查"><span class="nav-number">7.</span> <span class="nav-text">使用 @Required 进行 Bean 的依赖检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-Resource、-Autowired-和-Qualifier-指定-Bean-的自动装配策略"><span class="nav-number">8.</span> <span class="nav-text">使用 @Resource、@Autowired 和 @Qualifier 指定 Bean 的自动装配策略</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LaoZ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2020/07/23/2020-07-23-105334/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LaoZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rosemarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「Spring」Spring的依赖注入前奏(一)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-23 10:53:55" itemprop="dateCreated datePublished" datetime="2020-07-23T10:53:55+08:00">2020-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-24 17:36:43" itemprop="dateModified" datetime="2020-07-24T17:36:43+08:00">2020-07-24</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>Spring的依赖注入是一系列复杂操作的集合，这些复杂操作中，伴随了一些非常零碎的知识和Spring的特性。</p>
+<a id="more"></a>
+
+<h2 id="不能被实例化的类"><a href="#不能被实例化的类" class="headerlink" title="不能被实例化的类"></a>不能被实例化的类</h2><p>不能被实例化的类</p>
+<p>1）抽象类、接口<br>因为抽象类里面的方法尚未定义如何实现，所以无法进行实例化；</p>
+<p>2）内部类<br>因为内部类的实例化需要借助于外部类，所以某种程度上说是不能被直接实例化的；</p>
+<p>3）将构造函数的权限设为private</p>
+<h2 id="BeanPostProcessor接口"><a href="#BeanPostProcessor接口" class="headerlink" title="BeanPostProcessor接口"></a>BeanPostProcessor接口</h2><p>实现接口，定制一些bean的处理操作，比如利用Spring的BeanPostProcessor来修改bean属性。</p>
+<p>下面三篇文章有适当的解读：<br><a href="https://yuanyi0510.github.io/2019/03/Spring%E6%BA%90%E7%A0%811/" target="_blank" rel="noopener">https://yuanyi0510.github.io/2019/03/Spring源码1/</a></p>
+<p><a href="https://exceting.github.io/2019/07/16/%E5%88%A9%E7%94%A8Spring%E7%9A%84BeanPostProcessor%E6%9D%A5%E4%BF%AE%E6%94%B9bean%E5%B1%9E%E6%80%A7/" target="_blank" rel="noopener">https://exceting.github.io/2019/07/16/利用Spring的BeanPostProcessor来修改bean属性</a></p>
+<p><a href="https://xwjie.github.io/spring/spring-beanpostprocessor.html" target="_blank" rel="noopener">https://xwjie.github.io/spring/spring-beanpostprocessor.html</a></p>
+<h2 id="AccessController-doPrivileged-方法"><a href="#AccessController-doPrivileged-方法" class="headerlink" title="AccessController.doPrivileged()方法"></a>AccessController.doPrivileged()方法</h2><p>AccessController.doPrivileged() ，用户编写的代码可以自己定制权限（通过SecurityManager）<br>然后通过doPrivileged 执行特权。</p>
+<p>例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> somemethod() &#123;</span><br><span class="line">    ...normal code here...</span><br><span class="line">    String user = (String) AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction() &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> System.getProperty(<span class="string">"user.name"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    ...normal code here...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CGLib"><a href="#CGLib" class="headerlink" title="CGLib"></a>CGLib</h2><p>Spring 使用 CGlib 进行实例化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CglibSubclassingInstantiationStrategy</span> <span class="keyword">extends</span> <span class="title">SimpleInstantiationStrategy</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">instantiate</span><span class="params">(Constructor&lt;?&gt; ctor, Object... args)</span> </span>&#123;</span><br><span class="line">			Class&lt;?&gt; subclass = createEnhancedSubclass(<span class="keyword">this</span>.beanDefinition);</span><br><span class="line">			Object instance;</span><br><span class="line">			<span class="keyword">if</span> (ctor == <span class="keyword">null</span>) &#123;</span><br><span class="line">				instance = BeanUtils.instantiateClass(subclass);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">try</span> &#123;</span><br><span class="line">					Constructor&lt;?&gt; enhancedSubclassConstructor = subclass.getConstructor(ctor.getParameterTypes());</span><br><span class="line">					instance = enhancedSubclassConstructor.newInstance(args);</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">					<span class="keyword">throw</span> <span class="keyword">new</span> BeanInstantiationException(<span class="keyword">this</span>.beanDefinition.getBeanClass(),</span><br><span class="line">							<span class="string">"Failed to invoke constructor for CGLIB enhanced subclass ["</span> + subclass.getName() + <span class="string">"]"</span>, ex);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">// SPR-10785: set callbacks directly on the instance instead of in the</span></span><br><span class="line">			<span class="comment">// enhanced class (via the Enhancer) in order to avoid memory leaks.</span></span><br><span class="line">			Factory factory = (Factory) instance;</span><br><span class="line">			factory.setCallbacks(<span class="keyword">new</span> Callback[] &#123;NoOp.INSTANCE,</span><br><span class="line">					<span class="keyword">new</span> LookupOverrideMethodInterceptor(<span class="keyword">this</span>.beanDefinition, <span class="keyword">this</span>.owner),</span><br><span class="line">					<span class="keyword">new</span> ReplaceOverrideMethodInterceptor(<span class="keyword">this</span>.beanDefinition, <span class="keyword">this</span>.owner)&#125;);</span><br><span class="line">			<span class="keyword">return</span> instance;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用-PostConstruct-和-PreDestroy-指定生命周期回调方法"><a href="#使用-PostConstruct-和-PreDestroy-指定生命周期回调方法" class="headerlink" title="使用 @PostConstruct 和 @PreDestroy 指定生命周期回调方法"></a>使用 @PostConstruct 和 @PreDestroy 指定生命周期回调方法</h2><p>Spring Bean 是受 Spring IoC 容器管理，由容器进行初始化和销毁的（prototype 类型由容器初始化之后便不受容器管理），通常我们不需要关注容器对 Bean 的初始化和销毁操作，由 Spring 经过构造函数或者工厂方法创建的 Bean 就是已经初始化完成并立即可用的。然而在某些情况下，可能需要我们手工做一些额外的初始化或者销毁操作，这通常是针对一些资源的获取和释放操作。Spring 1.x 为此提供了两种方式供用户指定执行生命周期回调的方法。</p>
+<p>第一种方式是实现 Spring 提供的两个接口：InitializingBean 和 DisposableBean。如果希望在 Bean 初始化完成之后执行一些自定义操作，则可以让 Bean 实现 InitializingBean 接口，该接口包含一个 afterPropertiesSet() 方法，容器在为该 Bean 设置了属性之后，将自动调用该方法；如果 Bean 实现了 DisposableBean 接口，则容器在销毁该 Bean 之前，将调用该接口的 destroy() 方法。这种方式的缺点是，让 Bean 类实现 Spring 提供的接口，增加了代码与 Spring 框架的耦合度，因此不推荐使用。</p>
+<p>第二种方式是在 XML 文件中使用 的 init-method 和 destroy-method 属性指定初始化之后和销毁之前的回调方法，代码无需实现任何接口。这两个属性的取值是相应 Bean 类中的初始化和销毁方法，方法名任意，但是方法不能有参数。示例如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">”userService”</span></span></span><br><span class="line"><span class="tag"> <span class="attr">class</span>=<span class="string">”bookstore.service.UserService”</span></span></span><br><span class="line"><span class="tag"> <span class="attr">init-method</span>=<span class="string">”init”</span> <span class="attr">destroy-method</span>=<span class="string">”destroy”</span>&gt;</span></span><br><span class="line">   ...</span><br><span class="line"> <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Spring 2.5 在保留以上两种方式的基础上，提供了对 JSR-250 的支持。JSR-250 规范定义了两个用于指定声明周期方法的注解：@PostConstruct 和 @PreDestroy。这两个注解使用非常简单，只需分别将他们标注于初始化之后执行的回调方法或者销毁之前执行的回调方法上。由于使用了注解，因此需要配置相应的 Bean 后处理器，亦即在 XML 中增加如下一行：</p>
+<p>比较上述三种指定生命周期回调方法的方式，第一种是不建议使用的，不但其用法不如后两种方式灵活，而且无形中增加了代码与框架的耦合度。后面两种方式开发者可以根据使用习惯选择其中一种，但是最好不要混合使用，以免增加维护的难度。</p>
+<h2 id="使用-Required-进行-Bean-的依赖检查"><a href="#使用-Required-进行-Bean-的依赖检查" class="headerlink" title="使用 @Required 进行 Bean 的依赖检查"></a>使用 @Required 进行 Bean 的依赖检查</h2><p>依赖检查的作用是，判断给定 Bean 的相应 Setter 方法是否都在实例化的时候被调用了。而不是判断字段是否已经存在值了。Spring 进行依赖检查时，只会判断属性是否使用了 Setter 注入。如果某个属性没有使用 Setter 注入，即使是通过构造函数已经为该属性注入了值，Spring 仍然认为它没有执行注入，从而抛出异常。另外，Spring 只管是否通过 Setter 执行了注入，而对注入的值却没有任何要求，即使注入的 ，Spring 也认为是执行了依赖注入。</p>
+<h2 id="使用-Resource、-Autowired-和-Qualifier-指定-Bean-的自动装配策略"><a href="#使用-Resource、-Autowired-和-Qualifier-指定-Bean-的自动装配策略" class="headerlink" title="使用 @Resource、@Autowired 和 @Qualifier 指定 Bean 的自动装配策略"></a>使用 @Resource、@Autowired 和 @Qualifier 指定 Bean 的自动装配策略</h2><p>如果希望根据 name 执行自动装配，那么应该使用 JSR-250 提供的 @Resource 注解，而不应该使用 @Autowired 与 @Qualifier 的组合。</p>
+<p>@Resource 使用 byName 的方式执行自动封装。@Resource 标注可以作用于带一个参数的 Setter 方法、字段，以及带一个参数的普通方法上。@Resource 注解有一个 name 属性，用于指定 Bean 在配置文件中对应的名字。如果没有指定 name 属性，那么默认值就是字段或者属性的名字。@Resource 和 @Qualifier 的配合虽然仍然成立，但是 @Qualifier 对于 @Resource 而言，几乎与 name 属性等效。</p>
+<p>如果 @Resource 没有指定 name 属性，那么使用 byName 匹配失败后，会退而使用 byType 继续匹配，如果再失败，则抛出异常。在没有为 @Resource 注解显式指定 name 属性的前提下，如果将其标注在 BeanFactory 类型、ApplicationContext 类型、ResourceLoader 类型、ApplicationEventPublisher 类型、MessageSource 类型上，那么 Spring 会自动注入这些实现类的实例，不需要额外的操作。此时 name 属性不需要指定 ( 或者指定为””)，否则注入失败；如果使用了 @Qualifier，则该注解将被忽略。而对于用户自定义类型的注入，@Qualifier 和 name 等价，并且不被忽略。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/21/2020-07-21-120511/" rel="prev" title="「Spring」资源定位和IoC容器的初始化">
+      <i class="fa fa-chevron-left"></i> 「Spring」资源定位和IoC容器的初始化
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LaoZ</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

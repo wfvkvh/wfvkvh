@@ -30,7 +30,7 @@
 <meta property="og:description" content="JSR 规范Spring 出现于2003年，是对早期 J2EE 规范的复杂性的响应。虽然有些人认为 javaee 和 Spring 是竞争对手，但实际上 Spring 是 javaee 的补充。Spring 编程模型并不包含 Java EE 平台规范; 相反，它集成了来自 EE 平台的精心挑选的个别规范:">
 <meta property="og:locale" content="zh_TW">
 <meta property="article:published_time" content="2020-07-16T09:26:14.000Z">
-<meta property="article:modified_time" content="2020-07-25T04:21:06.238Z">
+<meta property="article:modified_time" content="2020-07-27T07:46:59.200Z">
 <meta property="article:author" content="LaoZ">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSR-规范"><span class="nav-number">1.</span> <span class="nav-text">JSR 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-的设计哲学"><span class="nav-number">2.</span> <span class="nav-text">Spring 的设计哲学</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JSR-规范"><span class="nav-number">1.</span> <span class="nav-text">JSR 规范</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-的设计哲学"><span class="nav-number">2.</span> <span class="nav-text">Spring 的设计哲学</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轮子哥对于IoC的一点看法"><span class="nav-number">3.</span> <span class="nav-text">轮子哥对于IoC的一点看法</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -265,7 +265,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-25 12:21:06" itemprop="dateModified" datetime="2020-07-25T12:21:06+08:00">2020-07-25</time>
+                <time title="Modified: 2020-07-27 15:46:59" itemprop="dateModified" datetime="2020-07-27T15:46:59+08:00">2020-07-27</time>
               </span>
 
           
@@ -337,6 +337,8 @@
 <li><p>为代码质量设置高标准。Spring 框架强调有意义的、当前的和准确的 javadoc。它是少数几个可以声称代码结构清晰、包之间没有循环依赖关系的项目之一。</p>
 </li>
 </ul>
+<h2 id="轮子哥对于IoC的一点看法"><a href="#轮子哥对于IoC的一点看法" class="headerlink" title="轮子哥对于IoC的一点看法"></a>轮子哥对于IoC的一点看法</h2><p>设计模式的好处还有一点，就是他做出来的样子性能很高。虽然扩展点的意思就是我在编译的时候不知道到底会命中哪个扩展，但是大多数扩展都是O(1)命中的（除了责任链模式） 。与之相关的还有IoC，也就是Inverse of Control，这也是一个好东西。Inverse of Control讲的是，<strong>类与类之间的依赖是可扩展的，而且是强类型的，并且你还不需要在类的内部指定（因此跟组合不一样）。当一个类需要用到他的依赖的时候，他不需要主动去获取他，而是可以等别人把依赖塞给他，然后再做事情</strong>。</p>
+<p>作者：vczh<br>链接：<a href="https://zhuanlan.zhihu.com/p/19835717" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/19835717</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 
     </div>
 
@@ -359,8 +361,8 @@
       <i class="fa fa-chevron-left"></i> 「NodeJS」升级Node js和npm
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/07/20/2018-05-12-HashMapCurrentb/" rel="next" title="「并发」java7/8 中的 HashMap 和 ConcurrentHashMap 全解析(下)">
-      「并发」java7/8 中的 HashMap 和 ConcurrentHashMap 全解析(下) <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/20/2018-05-12-HashMapCurrent/" rel="next" title="「并发」java7/8 中的 HashMap 和 ConcurrentHashMap 全解析(上)">
+      「并发」java7/8 中的 HashMap 和 ConcurrentHashMap 全解析(上) <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

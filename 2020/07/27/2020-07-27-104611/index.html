@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="文档基于 Spring-framework 5.2.7.RELEASE 版本  A Spring IoC container manages one or more beans. These beans are created with the configuration metadata that you supply to the container (for example, in the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「Spring-Core」1.3 Bean 概述">
+<meta property="og:url" content="https://rosemarry7.github.io/rosemarry7/2020/07/27/2020-07-27-104611/index.html">
+<meta property="og:site_name" content="Rosemarry">
+<meta property="og:description" content="文档基于 Spring-framework 5.2.7.RELEASE 版本  A Spring IoC container manages one or more beans. These beans are created with the configuration metadata that you supply to the container (for example, in the">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-07-27T02:46:24.185Z">
+<meta property="article:modified_time" content="2020-07-27T03:20:17.418Z">
+<meta property="article:author" content="LaoZ">
+<meta property="article:tag" content="翻译">
+<meta property="article:tag" content="Spring核心模块中文文档">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://rosemarry7.github.io/rosemarry7/2020/07/27/2020-07-27-104611/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>「Spring-Core」1.3 Bean 概述 | Rosemarry</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Rosemarry" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Rosemarry</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-Naming-Beans"><span class="nav-number">1.</span> <span class="nav-text">1.3.1. Naming Beans</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Aliasing-a-Bean-outside-the-Bean-Definition"><span class="nav-number">1.1.</span> <span class="nav-text">Aliasing a Bean outside the Bean Definition</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-Instantiating-Beans"><span class="nav-number">2.</span> <span class="nav-text">1.3.2. Instantiating Beans</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Instantiation-with-a-Constructor"><span class="nav-number">2.1.</span> <span class="nav-text">Instantiation with a Constructor</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Instantiation-with-a-Static-Factory-Method"><span class="nav-number">2.2.</span> <span class="nav-text">Instantiation with a Static Factory Method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Instantiation-by-Using-an-Instance-Factory-Method"><span class="nav-number">2.3.</span> <span class="nav-text">Instantiation by Using an Instance Factory Method</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Determining-a-Bean’s-Runtime-Type"><span class="nav-number">2.4.</span> <span class="nav-text">Determining a Bean’s Runtime Type</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LaoZ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2020/07/27/2020-07-27-104611/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LaoZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rosemarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「Spring-Core」1.3 Bean 概述
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-07-27 10:46:24 / Modified: 11:20:17" itemprop="dateCreated datePublished" datetime="2020-07-27T10:46:24+08:00">2020-07-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>文档基于 Spring-framework 5.2.7.RELEASE 版本</p>
+</blockquote>
+<p>A Spring IoC container manages one or more beans. These beans are created with the configuration metadata that you supply to the container (for example, in the form of XML &lt;bean/&gt; definitions).</p>
+<p>IoC 容器管理着许多bean。这些 bean 依据你提供给容器的配置元信息而创建 （例如：xml 文件 &lt;bean/&gt; 标签中定义的元素）</p>
+<a id="more"></a>
+
+<p>Within the container itself, these bean definitions are represented as BeanDefinition objects, which contain (among other information) the following metadata:</p>
+<ul>
+<li><p>A package-qualified class name: typically, the actual implementation class of the bean being defined.</p>
+</li>
+<li><p>Bean behavioral configuration elements, which state how the bean should behave in the container (scope, lifecycle callbacks, and so forth).</p>
+</li>
+<li><p>References to other beans that are needed for the bean to do its work. These references are also called collaborators or dependencies.</p>
+</li>
+<li><p>Other configuration settings to set in the newly created object — for example, the size limit of the pool or the number of connections to use in a bean that manages a connection pool.</p>
+</li>
+</ul>
+<p>This metadata translates to a set of properties that make up each bean definition. The following table describes these properties:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Property/属性</th>
+<th align="left">Explained in…​</th>
+<th align="left">含义说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Class</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-class" target="_blank" rel="noopener">Instantiating Beans</a></td>
+<td align="left">初始化Beans</td>
+</tr>
+<tr>
+<td align="left">Name</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-beanname" target="_blank" rel="noopener">Naming Beans</a></td>
+<td align="left">Bean的命名</td>
+</tr>
+<tr>
+<td align="left">Scope</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-scopes" target="_blank" rel="noopener">Bean Scopes</a></td>
+<td align="left">Bean的作用域</td>
+</tr>
+<tr>
+<td align="left">Constructor arguments</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-collaborators" target="_blank" rel="noopener">Dependency Injection</a></td>
+<td align="left">依赖注入</td>
+</tr>
+<tr>
+<td align="left">Properties</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-collaborators" target="_blank" rel="noopener">Dependency Injection</a></td>
+<td align="left">依赖注入</td>
+</tr>
+<tr>
+<td align="left">Autowiring mode</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-autowire" target="_blank" rel="noopener">Autowiring Collaborators</a></td>
+<td align="left">自动装配</td>
+</tr>
+<tr>
+<td align="left">Lazy initialization mode</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-lazy-init" target="_blank" rel="noopener">Lazy-initialized Beans</a></td>
+<td align="left">Bean的延迟加载</td>
+</tr>
+<tr>
+<td align="left">Initialization method</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-lifecycle-initializingbean" target="_blank" rel="noopener">Initialization Callbacks</a></td>
+<td align="left">初始化回调</td>
+</tr>
+<tr>
+<td align="left">Destruction method</td>
+<td align="left"><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-lifecycle-disposablebean" target="_blank" rel="noopener">Destruction Callbacks</a></td>
+<td align="left">Bean的销毁</td>
+</tr>
+</tbody></table>
+<p>In addition to bean definitions that contain information on how to create a specific bean, the ApplicationContext implementations also permit the registration of existing objects that are created outside the container (by users). This is done by accessing the ApplicationContext’s BeanFactory through the getBeanFactory() method, which returns the BeanFactory DefaultListableBeanFactory implementation. DefaultListableBeanFactory supports this registration through the registerSingleton(..) and registerBeanDefinition(..) methods. However, typical applications work solely with beans defined through regular bean definition metadata.</p>
+<blockquote>
+<p>Bean metadata and manually supplied singleton instances need to be registered as early as possible, in order for the container to properly reason about them during autowiring and other introspection steps. While overriding existing metadata and existing singleton instances is supported to some degree, the registration of new beans at runtime (concurrently with live access to the factory) is not officially supported and may lead to concurrent access exceptions, inconsistent state in the bean container, or both.</p>
+</blockquote>
+<h3 id="1-3-1-Naming-Beans"><a href="#1-3-1-Naming-Beans" class="headerlink" title="1.3.1. Naming Beans"></a>1.3.1. Naming Beans</h3><p>Every bean has one or more identifiers. These identifiers must be unique within the container that hosts the bean. A bean usually has only one identifier. However, if it requires more than one, the extra ones can be considered aliases.</p>
+<p>In XML-based configuration metadata, you use the id attribute, the name attribute, or both to specify the bean identifiers. The id attribute lets you specify exactly one id. Conventionally, these names are alphanumeric (‘myBean’, ‘someService’, etc.), but they can contain special characters as well. If you want to introduce other aliases for the bean, you can also specify them in the name attribute, separated by a comma (,), semicolon (;), or white space. As a historical note, in versions prior to Spring 3.1, the id attribute was defined as an xsd:ID type, which constrained possible characters. As of 3.1, it is defined as an xsd:string type. Note that bean id uniqueness is still enforced by the container, though no longer by XML parsers.</p>
+<p>You are not required to supply a name or an id for a bean. If you do not supply a name or id explicitly, the container generates a unique name for that bean. However, if you want to refer to that bean by name, through the use of the ref element or a Service Locator style lookup, you must provide a name. Motivations for not supplying a name are related to using inner beans and autowiring collaborators.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Bean Naming Conventions</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">The convention is to use the standard Java convention for instance field names when naming beans. That is, bean names start with a lowercase letter and are camel-cased from there. Examples of such names include accountManager, accountService, userDao, loginController, and so forth. Naming beans consistently makes your configuration easier to read and understand. Also, if you use Spring AOP, it helps a lot when applying advice to a set of beans related by name.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>With component scanning in the classpath, Spring generates bean names for unnamed components, following the rules described earlier: essentially, taking the simple class name and turning its initial character to lower-case. However, in the (unusual) special case when there is more than one character and both the first and second characters are upper case, the original casing gets preserved. These are the same rules as defined by java.beans.Introspector.decapitalize (which Spring uses here).</p>
+</blockquote>
+<h4 id="Aliasing-a-Bean-outside-the-Bean-Definition"><a href="#Aliasing-a-Bean-outside-the-Bean-Definition" class="headerlink" title="Aliasing a Bean outside the Bean Definition"></a>Aliasing a Bean outside the Bean Definition</h4><p>In a bean definition itself, you can supply more than one name for the bean, by using a combination of up to one name specified by the id attribute and any number of other names in the name attribute. These names can be equivalent aliases to the same bean and are useful for some situations, such as letting each component in an application refer to a common dependency by using a bean name that is specific to that component itself.</p>
+<p>Specifying all aliases where the bean is actually defined is not always adequate, however. It is sometimes desirable to introduce an alias for a bean that is defined elsewhere. This is commonly the case in large systems where configuration is split amongst each subsystem, with each subsystem having its own set of object definitions. In XML-based configuration metadata, you can use the <alias/> element to accomplish this. The following example shows how to do so:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">alias</span> <span class="attr">name</span>=<span class="string">"fromName"</span> <span class="attr">alias</span>=<span class="string">"toName"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>In this case, a bean (in the same container) named fromName may also, after the use of this alias definition, be referred to as toName.</p>
+<p>For example, the configuration metadata for subsystem A may refer to a DataSource by the name of subsystemA-dataSource. The configuration metadata for subsystem B may refer to a DataSource by the name of subsystemB-dataSource. When composing the main application that uses both these subsystems, the main application refers to the DataSource by the name of myApp-dataSource. To have all three names refer to the same object, you can add the following alias definitions to the configuration metadata:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">alias</span> <span class="attr">name</span>=<span class="string">"myApp-dataSource"</span> <span class="attr">alias</span>=<span class="string">"subsystemA-dataSource"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">alias</span> <span class="attr">name</span>=<span class="string">"myApp-dataSource"</span> <span class="attr">alias</span>=<span class="string">"subsystemB-dataSource"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>Now each component and the main application can refer to the dataSource through a name that is unique and guaranteed not to clash with any other definition (effectively creating a namespace), yet they refer to the same bean.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Java-configuration</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">If you use Javaconfiguration, the @Bean annotation can be used to provide aliases. See Using the @Bean Annotation for details.</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-2-Instantiating-Beans"><a href="#1-3-2-Instantiating-Beans" class="headerlink" title="1.3.2. Instantiating Beans"></a>1.3.2. Instantiating Beans</h3><p>A bean definition is essentially a recipe for creating one or more objects. The container looks at the recipe for a named bean when asked and uses the configuration metadata encapsulated by that bean definition to create (or acquire) an actual object.</p>
+<p>If you use XML-based configuration metadata, you specify the type (or class) of object that is to be instantiated in the class attribute of the <bean/> element. This class attribute (which, internally, is a Class property on a BeanDefinition instance) is usually mandatory. (For exceptions, see Instantiation by Using an Instance Factory Method and Bean Definition Inheritance.) You can use the Class property in one of two ways:</p>
+<ul>
+<li><p>Typically, to specify the bean class to be constructed in the case where the container itself directly creates the bean by calling its constructor reflectively, somewhat equivalent to Java code with the new operator.</p>
+</li>
+<li><p>To specify the actual class containing the static factory method that is invoked to create the object, in the less common case where the container invokes a static factory method on a class to create the bean. The object type returned from the invocation of the static factory method may be the same class or another class entirely.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">Inner class names</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">If you want to configure a bean definition for a static nested class, you have to use the binary name of the nested class.</td>
+</tr>
+<tr>
+<td align="left">For example, if you have a class called SomeThing in the com.example package, and this SomeThing class has a static nested class called OtherThing, the value of the class attribute on a bean definition would be com.example.SomeThing$OtherThing.</td>
+</tr>
+<tr>
+<td align="left">Notice the use of the $ character in the name to separate the nested class name from the outer class name.</td>
+</tr>
+</tbody></table>
+<h4 id="Instantiation-with-a-Constructor"><a href="#Instantiation-with-a-Constructor" class="headerlink" title="Instantiation with a Constructor"></a>Instantiation with a Constructor</h4><p>When you create a bean by the constructor approach, all normal classes are usable by and compatible with Spring. That is, the class being developed does not need to implement any specific interfaces or to be coded in a specific fashion. Simply specifying the bean class should suffice. However, depending on what type of IoC you use for that specific bean, you may need a default (empty) constructor.</p>
+<p>The Spring IoC container can manage virtually any class you want it to manage. It is not limited to managing true JavaBeans. Most Spring users prefer actual JavaBeans with only a default (no-argument) constructor and appropriate setters and getters modeled after the properties in the container. You can also have more exotic non-bean-style classes in your container. If, for example, you need to use a legacy connection pool that absolutely does not adhere to the JavaBean specification, Spring can manage it as well.</p>
+<p>With XML-based configuration metadata you can specify your bean class as follows:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"exampleBean"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBean"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"anotherExample"</span> <span class="attr">class</span>=<span class="string">"examples.ExampleBeanTwo"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>For details about the mechanism for supplying arguments to the constructor (if required) and setting object instance properties after the object is constructed, see Injecting Dependencies.</p>
+<h4 id="Instantiation-with-a-Static-Factory-Method"><a href="#Instantiation-with-a-Static-Factory-Method" class="headerlink" title="Instantiation with a Static Factory Method"></a>Instantiation with a Static Factory Method</h4><p>When defining a bean that you create with a static factory method, use the class attribute to specify the class that contains the static factory method and an attribute named factory-method to specify the name of the factory method itself. You should be able to call this method (with optional arguments, as described later) and return a live object, which subsequently is treated as if it had been created through a constructor. One use for such a bean definition is to call static factories in legacy code.</p>
+<p>The following bean definition specifies that the bean be created by calling a factory method. The definition does not specify the type (class) of the returned object, only the class containing the factory method. In this example, the createInstance() method must be a static method. The following example shows how to specify a factory method:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"clientService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">class</span>=<span class="string">"examples.ClientService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-method</span>=<span class="string">"createInstance"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The following example shows a class that would work with the preceding bean definition:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClientService</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ClientService clientService = <span class="keyword">new</span> ClientService();</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ClientService</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ClientService <span class="title">createInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> clientService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>For details about the mechanism for supplying (optional) arguments to the factory method and setting object instance properties after the object is returned from the factory, see Dependencies and Configuration in Detail.</p>
+<h4 id="Instantiation-by-Using-an-Instance-Factory-Method"><a href="#Instantiation-by-Using-an-Instance-Factory-Method" class="headerlink" title="Instantiation by Using an Instance Factory Method"></a>Instantiation by Using an Instance Factory Method</h4><p>Similar to instantiation through a static factory method, instantiation with an instance factory method invokes a non-static method of an existing bean from the container to create a new bean. To use this mechanism, leave the class attribute empty and, in the factory-bean attribute, specify the name of a bean in the current (or parent or ancestor) container that contains the instance method that is to be invoked to create the object. Set the name of the factory method itself with the factory-method attribute. The following example shows how to configure such a bean:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- the factory bean, which contains a method called createInstance() --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"serviceLocator"</span> <span class="attr">class</span>=<span class="string">"examples.DefaultServiceLocator"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- inject any dependencies required by this locator bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- the bean to be created via the factory bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"clientService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-bean</span>=<span class="string">"serviceLocator"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-method</span>=<span class="string">"createClientServiceInstance"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The following example shows the corresponding class:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultServiceLocator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ClientService clientService = <span class="keyword">new</span> ClientServiceImpl();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClientService <span class="title">createClientServiceInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> clientService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>One factory class can also hold more than one factory method, as the following example shows:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"serviceLocator"</span> <span class="attr">class</span>=<span class="string">"examples.DefaultServiceLocator"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- inject any dependencies required by this locator bean --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"clientService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-bean</span>=<span class="string">"serviceLocator"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-method</span>=<span class="string">"createClientServiceInstance"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-bean</span>=<span class="string">"serviceLocator"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">factory-method</span>=<span class="string">"createAccountServiceInstance"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>The following example shows the corresponding class:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultServiceLocator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ClientService clientService = <span class="keyword">new</span> ClientServiceImpl();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AccountService accountService = <span class="keyword">new</span> AccountServiceImpl();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClientService <span class="title">createClientServiceInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> clientService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> AccountService <span class="title">createAccountServiceInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> accountService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This approach shows that the factory bean itself can be managed and configured through dependency injection (DI). See <a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-properties-detailed" target="_blank" rel="noopener">Dependencies and Configuration in Detail</a>.</p>
+<blockquote>
+<p>In Spring documentation, “factory bean” refers to a bean that is configured in the Spring container and that creates objects through an instance or static factory method. By contrast, <em>FactoryBean</em> (notice the capitalization) refers to a Spring-specific <a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/core.html#beans-factory-extension-factorybean" target="_blank" rel="noopener"><em>FactoryBean</em></a> implementation class.</p>
+</blockquote>
+<h4 id="Determining-a-Bean’s-Runtime-Type"><a href="#Determining-a-Bean’s-Runtime-Type" class="headerlink" title="Determining a Bean’s Runtime Type"></a>Determining a Bean’s Runtime Type</h4><p>The runtime type of a specific bean is non-trivial to determine. A specified class in the bean metadata definition is just an initial class reference, potentially combined with a declared factory method or being a FactoryBean class which may lead to a different runtime type of the bean, or not being set at all in case of an instance-level factory method (which is resolved via the specified factory-bean name instead). Additionally, AOP proxying may wrap a bean instance with an interface-based proxy with limited exposure of the target bean’s actual type (just its implemented interfaces).</p>
+<p>The recommended way to find out about the actual runtime type of a particular bean is a BeanFactory.getType call for the specified bean name. This takes all of the above cases into account and returns the type of object that a BeanFactory.getBean call is going to return for the same bean name.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BF%BB%E8%AF%91/" rel="tag"># 翻译</a>
+              <a href="/tags/Spring%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3/" rel="tag"># Spring核心模块中文文档</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/26/2020-07-23-200511/" rel="prev" title="「Spring-Core」1.1-1.2 IoC容器概述">
+      <i class="fa fa-chevron-left"></i> 「Spring-Core」1.1-1.2 IoC容器概述
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LaoZ</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

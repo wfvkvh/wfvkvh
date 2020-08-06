@@ -29,12 +29,14 @@
 <meta property="og:site_name" content="Rosemarry">
 <meta property="og:description" content="概述一些关于程序设计的想法、疑问和思考">
 <meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://rosemarry7.github.io/images/20200806/1.png">
 <meta property="article:published_time" content="2020-08-06T06:06:37.980Z">
-<meta property="article:modified_time" content="2020-08-06T06:08:08.812Z">
+<meta property="article:modified_time" content="2020-08-06T08:07:27.391Z">
 <meta property="article:author" content="LaoZ">
 <meta property="article:tag" content="设计原则">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rosemarry7.github.io/images/20200806/1.png">
 
 <link rel="canonical" href="https://rosemarry7.github.io/rosemarry7/2020/08/06/2020-08-05-230211/">
 
@@ -178,7 +180,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-贫血模型和充血模型"><span class="nav-number">2.</span> <span class="nav-text">1.贫血模型和充血模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关于抽象和函数命名，有大佬说过这么一句话"><span class="nav-number">3.</span> <span class="nav-text">2. 关于抽象和函数命名，有大佬说过这么一句话:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-关于使用组合还是继承的一个观点"><span class="nav-number">4.</span> <span class="nav-text">3.关于使用组合还是继承的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-粗略的类拆分原则"><span class="nav-number">5.</span> <span class="nav-text">4.粗略的类拆分原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-关于耦合和内聚的一个想法"><span class="nav-number">6.</span> <span class="nav-text">5.关于耦合和内聚的一个想法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-关于设计原则和设计模式的一个观点"><span class="nav-number">7.</span> <span class="nav-text">6.关于设计原则和设计模式的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-前段时间需要对外提供sdk-最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了-像这种情况-有的时候不知道该参考什么来设计"><span class="nav-number">8.</span> <span class="nav-text">7.前段时间需要对外提供sdk,最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了,像这种情况,有的时候不知道该参考什么来设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？"><span class="nav-number">9.</span> <span class="nav-text">8.如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-里氏替换原则"><span class="nav-number">10.</span> <span class="nav-text">9.里氏替换原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反里氏替换原则"><span class="nav-number">10.0.1.</span> <span class="nav-text">反里氏替换原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-关于单一职责，在实际项目中如何划分？"><span class="nav-number">11.</span> <span class="nav-text">10.关于单一职责，在实际项目中如何划分？</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-贫血模型和充血模型"><span class="nav-number">2.</span> <span class="nav-text">1.贫血模型和充血模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关于抽象和函数命名"><span class="nav-number">3.</span> <span class="nav-text">2. 关于抽象和函数命名:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-关于使用组合还是继承的一个观点"><span class="nav-number">4.</span> <span class="nav-text">3.关于使用组合还是继承的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-粗略的类拆分原则"><span class="nav-number">5.</span> <span class="nav-text">4.粗略的类拆分原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-关于耦合和内聚的一个想法"><span class="nav-number">6.</span> <span class="nav-text">5.关于耦合和内聚的一个想法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-关于设计原则和设计模式的一个观点"><span class="nav-number">7.</span> <span class="nav-text">6.关于设计原则和设计模式的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-前段时间需要对外提供sdk-最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了-像这种情况-有的时候不知道该参考什么来设计"><span class="nav-number">8.</span> <span class="nav-text">7.前段时间需要对外提供sdk,最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了,像这种情况,有的时候不知道该参考什么来设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？"><span class="nav-number">9.</span> <span class="nav-text">8.如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-里氏替换原则"><span class="nav-number">10.</span> <span class="nav-text">9.里氏替换原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反里氏替换原则"><span class="nav-number">10.0.1.</span> <span class="nav-text">反里氏替换原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-关于单一职责，在实际项目中如何划分？"><span class="nav-number">11.</span> <span class="nav-text">10.关于单一职责，在实际项目中如何划分？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-接口隔离原则中的-”接口“-指的是什么？"><span class="nav-number">12.</span> <span class="nav-text">11.接口隔离原则中的 ”接口“ 指的是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接口隔离原则，我个人原意将他成为-积木原则、乐高原则"><span class="nav-number">12.1.</span> <span class="nav-text">接口隔离原则，我个人原意将他成为 积木原则、乐高原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-接口隔离原则与单一职责原则的区别"><span class="nav-number">13.</span> <span class="nav-text">12.接口隔离原则与单一职责原则的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？"><span class="nav-number">14.</span> <span class="nav-text">13.“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-几点增加代码复用性的方法"><span class="nav-number">15.</span> <span class="nav-text">14.几点增加代码复用性的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-代码重复指的是什么重复？"><span class="nav-number">16.</span> <span class="nav-text">14.代码重复指的是什么重复？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？"><span class="nav-number">17.</span> <span class="nav-text">15.“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -260,7 +262,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2020-08-06 14:06:37 / Modified: 14:08:08" itemprop="dateCreated datePublished" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
+              <time title="Created: 2020-08-06 14:06:37 / Modified: 16:07:27" itemprop="dateCreated datePublished" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
             </span>
 
           
@@ -278,7 +280,8 @@
 <a id="more"></a>
 
 <h2 id="1-贫血模型和充血模型"><a href="#1-贫血模型和充血模型" class="headerlink" title="1.贫血模型和充血模型"></a>1.贫血模型和充血模型</h2><p>贫血模型（Anemic Domain Model由<br>MatinFowler提出）又称为失血模型，是指domain object仅有属性的getter/setter方法的纯数据类，将所有类的行为放到service层。原文他是这么说的“By pulling all the behavior out into services, however, you essentially end up with Transaction Scripts, and thus lose the advantages that the domain model can bring. ”他的原文我放上来了，英文好的同学可以看看：<a href="https://martinfowler.com/bliki/AnemicDomainModel.html" target="_blank" rel="noopener">https://martinfowler.com/bliki/AnemicDomainModel.html</a> 。 我觉得他有点学者气太重，这篇博客他都不知道为啥贫血模型会流行（I don’t know why this anti-pattern is so common）。</p>
-<h2 id="2-关于抽象和函数命名，有大佬说过这么一句话"><a href="#2-关于抽象和函数命名，有大佬说过这么一句话" class="headerlink" title="2. 关于抽象和函数命名，有大佬说过这么一句话:"></a>2. 关于抽象和函数命名，有大佬说过这么一句话:</h2><p> 每个优秀的程序员都知道，不应该定义一个attackBaghdad() ‘袭击巴格达‘ 的方法，而是应该把城市作为函数的参数 attack(city)。</p>
+<h2 id="2-关于抽象和函数命名"><a href="#2-关于抽象和函数命名" class="headerlink" title="2. 关于抽象和函数命名:"></a>2. 关于抽象和函数命名:</h2><p> 每个优秀的程序员都知道，不应该定义一个attackBaghdad() ‘袭击巴格达‘ 的方法，而是应该把城市作为函数的参数 attack(city)。</p>
+<p> 假如你现在要去商店买东西，你肯定不会直接把钱包给收银员，让收银员自己从里面拿钱，而是你从钱包里把钱拿出来交给收银员。</p>
 <h2 id="3-关于使用组合还是继承的一个观点"><a href="#3-关于使用组合还是继承的一个观点" class="headerlink" title="3.关于使用组合还是继承的一个观点"></a>3.关于使用组合还是继承的一个观点</h2><p>我的观点比较极端，用接口，组合和委托代替继承。原因如下：</p>
 <ol>
 <li>人无法预知未来，现在比较稳定的类继承关系将来未必稳定。</li>
@@ -338,6 +341,40 @@
 <p>这里的用户信息中包含了地址信息，有时候可能会觉得，地址也是用户信息的一部分，符合单一职责没毛病。<br>但是也需要根据实际的业务情况看，如果地址信息只是单纯的在用户信息页面做展示用，那么这么做其实也OK。</p>
 <p>但是，如果别的模块也引用了这个地址信息，比如公司新开一个电商业务，电商需要用户的地址信息，此时的地址信息拥有做配送和个人信息也的展示两个职责，那么这个地址信息再放在用户信息类里就不太合适了，违反了单一职责原则。</p>
 <p>如果再进一步，公司发展壮大，系统变多，所有系统都需要一个统一的用户信息，那么用户信息中的，身份证、电话、邮箱等信息被用来做身份验证，此时也不适合再放在UserInfo类中了，这些鉴权信息有多维度的职责。</p>
+<h2 id="11-接口隔离原则中的-”接口“-指的是什么？"><a href="#11-接口隔离原则中的-”接口“-指的是什么？" class="headerlink" title="11.接口隔离原则中的 ”接口“ 指的是什么？"></a>11.接口隔离原则中的 ”接口“ 指的是什么？</h2><p>生活中的接口我们可以用它指代灯泡插座、电脑的硬件插口。在软件开发中，它既可以是一组抽象的约定，也可以是应用程序间互相调用的接口API接口，还可以特指面向对象语言中的接口等。</p>
+<p>在这条原则中，我们可以把接口理解为：</p>
+<ul>
+<li>一组 API 接口集合</li>
+<li>单个 API 接口或函数</li>
+<li>OOP 中的接口概念</li>
+</ul>
+<h3 id="接口隔离原则，我个人原意将他成为-积木原则、乐高原则"><a href="#接口隔离原则，我个人原意将他成为-积木原则、乐高原则" class="headerlink" title="接口隔离原则，我个人原意将他成为 积木原则、乐高原则"></a>接口隔离原则，我个人原意将他成为 <strong><em>积木原则、乐高原则</em></strong></h3><h2 id="12-接口隔离原则与单一职责原则的区别"><a href="#12-接口隔离原则与单一职责原则的区别" class="headerlink" title="12.接口隔离原则与单一职责原则的区别"></a>12.接口隔离原则与单一职责原则的区别</h2><p>单一职责原则针对的是模块、类、接口的设计。接口隔离原则相对于单一职责原则，一方面更侧重于接口的设计，另一方面它的思考角度也是不同的。</p>
+<p><em>接口隔离原则提供了一种判断接口的职责是否单一的标准：通过调用者如何使用接口来间接地判定。如果调用者只使用部分接口或接口的部分功能，那接口的设计就不够职责单一。</em></p>
+<p><img src="/images/20200806/1.png" alt=""></p>
+<h2 id="13-“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？"><a href="#13-“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？" class="headerlink" title="13.“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？"></a>13.“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？</h2><p>基于接口和依赖注入都是控制反转原则的实现，都讲究对象从外部传入，不从类中直接 new 。<br>两者的区别主要是基于接口强调是接口，依赖注入不强调这个，接口或者类都可以。</p>
+<h2 id="14-几点增加代码复用性的方法"><a href="#14-几点增加代码复用性的方法" class="headerlink" title="14.几点增加代码复用性的方法"></a>14.几点增加代码复用性的方法</h2><ul>
+<li>减少代码耦合</li>
+<li>满足单一职责原则</li>
+<li>模块化</li>
+<li>业务与非业务逻辑分离</li>
+<li>通用代码下沉</li>
+<li>继承、多态、抽象、封装</li>
+<li>应用模板等设计模式</li>
+</ul>
+<h2 id="14-代码重复指的是什么重复？"><a href="#14-代码重复指的是什么重复？" class="headerlink" title="14.代码重复指的是什么重复？"></a>14.代码重复指的是什么重复？</h2><p>主要是指逻辑重复、功能语义重复、代码执行重复。</p>
+<p>还有比如文档重复、数据对象重复等</p>
+<p>例如类<br>class User<br>  String id<br>  Date registerDate<br>  int age<br>  int registedDays<br>其中 age可以由身份证号码算出来，而且每年都会递增。注册会员多少天了，也可以算出来。所以是不是可以考虑，数据只存储id和注册时间。其余两个字段可以算出来。</p>
+<p>设计每个模块、类、函数，都要像设计外部api一样去思考，隐藏可变的细节、暴露不变的接口。</p>
+<h2 id="15-“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？"><a href="#15-“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？" class="headerlink" title="15.“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？"></a>15.“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？</h2><ol>
+<li><p>单一职责原则<br>适用对象:模块，类，接口<br>侧重点:高内聚，低耦合<br>思考角度:自身</p>
+</li>
+<li><p>接口隔离原则<br>适用对象:接口，函数<br>侧重点:低耦合<br>思考角度:调用者</p>
+</li>
+<li><p>基于接口而非实现编程<br>适用对象:接口，抽象类<br>侧重点:低耦合<br>思考角度:调用者</p>
+</li>
+<li><p>迪米特法则<br>适用对象:模块，类<br>侧重点:低耦合<br>思考角度:类关系</p>
+</li>
+</ol>
 
     </div>
 

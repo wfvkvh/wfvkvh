@@ -185,14 +185,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -228,7 +228,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2017/01/19/2016-06-01-readme-driven-development/">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2018/05/12/2018-05-12-memorymodel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -242,7 +242,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/01/19/2016-06-01-readme-driven-development/" class="post-title-link" itemprop="url">函数定义、重载，函数声明与表达式</a>
+            <a href="/2018/05/12/2018-05-12-memorymodel/" class="post-title-link" itemprop="url">「并发」Java并发基础之内存模型</a>
         </h2>
 
         <div class="post-meta">
@@ -252,14 +252,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2017-01-19 00:52:47" itemprop="dateCreated datePublished" datetime="2017-01-19T00:52:47+08:00">2017-01-19</time>
+              <time title="Created: 2018-05-12 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-12T00:00:00+08:00">2018-05-12</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-25 14:00:13" itemprop="dateModified" datetime="2020-07-25T14:00:13+08:00">2020-07-25</time>
+                <time title="Modified: 2020-08-06 14:06:37" itemprop="dateModified" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
               </span>
 
           
@@ -273,14 +273,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li>javascript的函数也是对象,实际上他是Function类型的实例 有三种写法</li>
-<li>函数声明,<strong>会被解析器率先读取,并在执行任何代码之前可用</strong></li>
-<li>因为在代码执行之前,解析器就通过一个函数声明提升(function declaration hoisting)的过程,读取函数声明到执行环境中</li>
-</ul>
+          <blockquote>
+<p>文章来自网站 <a href="https://www.javadoop.com/" target="_blank" rel="noopener">JAVADOOP</a></p>
+</blockquote>
+<p>关于 Java 并发也算是写了好几篇文章了，本文将介绍一些比较基础的内容，注意，阅读本文需要一定的并发基础。</p>
+<p>本文的主要目的是让大家对于并发程序中的重排序、内存可见性以及原子性有一定的了解，同时要能准确理解 synchronized、volatile、final 几个关键字的作用。</p>
+<p>另外，本文还对双重检查形式的单例模式为什么需要使用 volatile 做了深入的解释。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/01/19/2016-06-01-readme-driven-development/#more" rel="contents">
+              <a class="btn" href="/2018/05/12/2018-05-12-memorymodel/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -304,7 +305,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2017/01/19/2017-01-18-python-object/">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2018/05/10/2018-05-10-DeclarParent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -318,7 +319,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/01/19/2017-01-18-python-object/" class="post-title-link" itemprop="url">Python核心编程，第四章习题</a>
+            <a href="/2018/05/10/2018-05-10-DeclarParent/" class="post-title-link" itemprop="url">「Spring」DeclareParents注释声明对象的AOP错误</a>
         </h2>
 
         <div class="post-meta">
@@ -328,14 +329,86 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2017-01-19 00:52:47" itemprop="dateCreated datePublished" datetime="2017-01-19T00:52:47+08:00">2017-01-19</time>
+              <time title="Created: 2018-05-10 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-10T00:00:00+08:00">2018-05-10</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-25 13:59:52" itemprop="dateModified" datetime="2020-07-25T13:59:52+08:00">2020-07-25</time>
+                <time title="Modified: 2020-08-06 14:06:37" itemprop="dateModified" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>今天在使用Spring的 @DeclareParents注释时，使用AspectJ拓展对象的接口</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/10/2018-05-10-DeclarParent/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2017/01/18/2017-01-18-python-object/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LaoZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rosemarry">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/01/18/2017-01-18-python-object/" class="post-title-link" itemprop="url">Python核心编程，第四章习题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-01-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-01-18T00:00:00+08:00">2017-01-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-06 14:06:37" itemprop="dateModified" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
               </span>
 
           
@@ -354,7 +427,7 @@
 <p>身份：唯一身份标识，可近似的被认为是内存地址，可以使用内建函数id()获取<br>类型：类型决定了对象保存什么样的值，可以进行什么样的操作，以及遵循什么样的规则，使用type()查看<br>值：对象的数据项，有可改变与不可改变的属性</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/01/19/2017-01-18-python-object/#more" rel="contents">
+              <a class="btn" href="/2017/01/18/2017-01-18-python-object/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -378,7 +451,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2017/01/19/2016-06-01-use-Jekyll-build-blog/">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2016/06/01/2016-06-01-use-Jekyll-build-blog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -392,7 +465,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2017/01/19/2016-06-01-use-Jekyll-build-blog/" class="post-title-link" itemprop="url">使用Jekyll搭建静态博客[转]</a>
+            <a href="/2016/06/01/2016-06-01-use-Jekyll-build-blog/" class="post-title-link" itemprop="url">使用Jekyll搭建静态博客[转]</a>
         </h2>
 
         <div class="post-meta">
@@ -402,14 +475,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2017-01-19 00:52:47" itemprop="dateCreated datePublished" datetime="2017-01-19T00:52:47+08:00">2017-01-19</time>
+              <time title="Created: 2016-06-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-06-01T00:00:00+08:00">2016-06-01</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-25 14:00:04" itemprop="dateModified" datetime="2020-07-25T14:00:04+08:00">2020-07-25</time>
+                <time title="Modified: 2020-08-06 14:06:37" itemprop="dateModified" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
               </span>
 
           
@@ -432,7 +505,83 @@
 <p>Jekyll 是一个简单的博客形态的静态站点生产机器。它有一个模版目录，其中包含原始文本格式的文档，通过一个转换器（如 Markdown）和我们的 Liquid 渲染器转化成一个完整的可发布的静态网站，你可以发布在任何你喜爱的服务器上。Jekyll 也可以运行在 GitHub Page 上，也就是说，你可以使用 GitHub 的服务来搭建你的项目页面、博客或者网站，而且是完全免费的。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2017/01/19/2016-06-01-use-Jekyll-build-blog/#more" rel="contents">
+              <a class="btn" href="/2016/06/01/2016-06-01-use-Jekyll-build-blog/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2016/06/01/2016-06-01-readme-driven-development/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LaoZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rosemarry">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/01/2016-06-01-readme-driven-development/" class="post-title-link" itemprop="url">函数定义、重载，函数声明与表达式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-01 00:00:00" itemprop="dateCreated datePublished" datetime="2016-06-01T00:00:00+08:00">2016-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-06 14:06:37" itemprop="dateModified" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>javascript的函数也是对象,实际上他是Function类型的实例 有三种写法</li>
+<li>函数声明,<strong>会被解析器率先读取,并在执行任何代码之前可用</strong></li>
+<li>因为在代码执行之前,解析器就通过一个函数声明提升(function declaration hoisting)的过程,读取函数声明到执行环境中</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2016/06/01/2016-06-01-readme-driven-development/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

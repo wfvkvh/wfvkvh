@@ -24,21 +24,21 @@
 
   <meta name="description" content="概述一些关于程序设计的想法、疑问和思考">
 <meta property="og:type" content="article">
-<meta property="og:title" content="「设计」一些程序设计的疑惑与思考">
-<meta property="og:url" content="https://rosemarry7.github.io/rosemarry7/2020/08/06/2020-08-05-230211/index.html">
+<meta property="og:title" content="「设计」一些程序设计的疑惑与思考 (一)">
+<meta property="og:url" content="https://rosemarry7.github.io/rosemarry7/2020/08/13/2020-08-05-230211/index.html">
 <meta property="og:site_name" content="Rosemarry">
 <meta property="og:description" content="概述一些关于程序设计的想法、疑问和思考">
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://rosemarry7.github.io/images/20200806/1.png">
-<meta property="article:published_time" content="2020-08-06T06:06:37.980Z">
-<meta property="article:modified_time" content="2020-08-06T08:07:27.391Z">
+<meta property="article:published_time" content="2020-08-13T10:00:48.291Z">
+<meta property="article:modified_time" content="2020-08-13T10:00:48.291Z">
 <meta property="article:author" content="LaoZ">
 <meta property="article:tag" content="设计原则">
 <meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://rosemarry7.github.io/images/20200806/1.png">
 
-<link rel="canonical" href="https://rosemarry7.github.io/rosemarry7/2020/08/06/2020-08-05-230211/">
+<link rel="canonical" href="https://rosemarry7.github.io/rosemarry7/2020/08/13/2020-08-05-230211/">
 
 
 <script class="page-configurations">
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>「设计」一些程序设计的疑惑与思考 | Rosemarry</title>
+  <title>「设计」一些程序设计的疑惑与思考 (一) | Rosemarry</title>
   
 
 
@@ -180,7 +180,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-贫血模型和充血模型"><span class="nav-number">2.</span> <span class="nav-text">1.贫血模型和充血模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关于抽象和函数命名"><span class="nav-number">3.</span> <span class="nav-text">2. 关于抽象和函数命名:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-关于使用组合还是继承的一个观点"><span class="nav-number">4.</span> <span class="nav-text">3.关于使用组合还是继承的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-粗略的类拆分原则"><span class="nav-number">5.</span> <span class="nav-text">4.粗略的类拆分原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-关于耦合和内聚的一个想法"><span class="nav-number">6.</span> <span class="nav-text">5.关于耦合和内聚的一个想法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-关于设计原则和设计模式的一个观点"><span class="nav-number">7.</span> <span class="nav-text">6.关于设计原则和设计模式的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-前段时间需要对外提供sdk-最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了-像这种情况-有的时候不知道该参考什么来设计"><span class="nav-number">8.</span> <span class="nav-text">7.前段时间需要对外提供sdk,最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了,像这种情况,有的时候不知道该参考什么来设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？"><span class="nav-number">9.</span> <span class="nav-text">8.如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-里氏替换原则"><span class="nav-number">10.</span> <span class="nav-text">9.里氏替换原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反里氏替换原则"><span class="nav-number">10.0.1.</span> <span class="nav-text">反里氏替换原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-关于单一职责，在实际项目中如何划分？"><span class="nav-number">11.</span> <span class="nav-text">10.关于单一职责，在实际项目中如何划分？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-接口隔离原则中的-”接口“-指的是什么？"><span class="nav-number">12.</span> <span class="nav-text">11.接口隔离原则中的 ”接口“ 指的是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接口隔离原则，我个人原意将他成为-积木原则、乐高原则"><span class="nav-number">12.1.</span> <span class="nav-text">接口隔离原则，我个人原意将他成为 积木原则、乐高原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-接口隔离原则与单一职责原则的区别"><span class="nav-number">13.</span> <span class="nav-text">12.接口隔离原则与单一职责原则的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？"><span class="nav-number">14.</span> <span class="nav-text">13.“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-几点增加代码复用性的方法"><span class="nav-number">15.</span> <span class="nav-text">14.几点增加代码复用性的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-代码重复指的是什么重复？"><span class="nav-number">16.</span> <span class="nav-text">14.代码重复指的是什么重复？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？"><span class="nav-number">17.</span> <span class="nav-text">15.“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-贫血模型和充血模型"><span class="nav-number">2.</span> <span class="nav-text">1.贫血模型和充血模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关于抽象和函数命名"><span class="nav-number">3.</span> <span class="nav-text">2. 关于抽象和函数命名:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-关于使用组合还是继承的一个观点"><span class="nav-number">4.</span> <span class="nav-text">3.关于使用组合还是继承的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-粗略的类拆分原则"><span class="nav-number">5.</span> <span class="nav-text">4.粗略的类拆分原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-关于耦合和内聚的一个想法"><span class="nav-number">6.</span> <span class="nav-text">5.关于耦合和内聚的一个想法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-关于设计原则和设计模式的一个观点"><span class="nav-number">7.</span> <span class="nav-text">6.关于设计原则和设计模式的一个观点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-前段时间需要对外提供sdk-最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了-像这种情况-有的时候不知道该参考什么来设计"><span class="nav-number">8.</span> <span class="nav-text">7.前段时间需要对外提供sdk,最开始的设计就是根据职责定义了多个client对象供其他系统调用，后来角色不是很友好，最后还是提供了个聚合类，将所有的接口都集中到一起对外提供了,像这种情况,有的时候不知道该参考什么来设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？"><span class="nav-number">9.</span> <span class="nav-text">8.如何做到“对扩展开放、修改关闭”？扩展和修改各指什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-里氏替换原则"><span class="nav-number">10.</span> <span class="nav-text">9.里氏替换原则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反里氏替换原则"><span class="nav-number">10.0.1.</span> <span class="nav-text">反里氏替换原则</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-关于单一职责，在实际项目中如何划分？"><span class="nav-number">11.</span> <span class="nav-text">10.关于单一职责，在实际项目中如何划分？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-接口隔离原则中的-”接口“-指的是什么？"><span class="nav-number">12.</span> <span class="nav-text">11.接口隔离原则中的 ”接口“ 指的是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#接口隔离原则，我个人原意将他成为-积木原则、乐高原则"><span class="nav-number">12.1.</span> <span class="nav-text">接口隔离原则，我个人原意将他成为 积木原则、乐高原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-接口隔离原则与单一职责原则的区别"><span class="nav-number">13.</span> <span class="nav-text">12.接口隔离原则与单一职责原则的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？"><span class="nav-number">14.</span> <span class="nav-text">13.“基于接口而非实现编程”跟“依赖注入”，看起来非常类似，那它俩有什么区别和联系呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-几点增加代码复用性的方法"><span class="nav-number">15.</span> <span class="nav-text">14.几点增加代码复用性的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-代码重复指的是什么重复？"><span class="nav-number">16.</span> <span class="nav-text">14.代码重复指的是什么重复？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？"><span class="nav-number">17.</span> <span class="nav-text">15.“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-为什么要分-MVC-三层开发？"><span class="nav-number">18.</span> <span class="nav-text">16.为什么要分 MVC 三层开发？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-BO、VO、Entity-存在的意义是什么？"><span class="nav-number">19.</span> <span class="nav-text">17.BO、VO、Entity 存在的意义是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-既然-VO、BO、Entity-不能合并，那如何解决代码重复的问题呢？"><span class="nav-number">20.</span> <span class="nav-text">18.既然 VO、BO、Entity 不能合并，那如何解决代码重复的问题呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#19-代码重复问题解决了，那不同分层之间的数据对象该如何互相转化呢？"><span class="nav-number">21.</span> <span class="nav-text">19.代码重复问题解决了，那不同分层之间的数据对象该如何互相转化呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20-VO、BO、Entity-都是基于贫血模型的，而且为了兼容框架或开发库（比如-MyBatis、Dozer、BeanUtils），我们还需要定义每个字段的-set-方法。这些都违背-OOP-的封装特性，会导致数据被随意修改。那到底该怎么办好呢？"><span class="nav-number">22.</span> <span class="nav-text">20. VO、BO、Entity 都是基于贫血模型的，而且为了兼容框架或开发库（比如 MyBatis、Dozer、BeanUtils），我们还需要定义每个字段的 set 方法。这些都违背 OOP 的封装特性，会导致数据被随意修改。那到底该怎么办好呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#21-单例模式中DCL-懒汉式Double-Check-Lock-中给，instance-加-volatile-关键字真的可以防止指令重排序吗？"><span class="nav-number">23.</span> <span class="nav-text">21.单例模式中DCL(懒汉式Double Check Lock)中给，instance 加 volatile 关键字真的可以防止指令重排序吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#22-传统工厂模式的替代方案"><span class="nav-number">24.</span> <span class="nav-text">22.传统工厂模式的替代方案</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -194,7 +194,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -238,7 +238,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
-    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2020/08/06/2020-08-05-230211/">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2020/08/13/2020-08-05-230211/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -251,7 +251,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          「设计」一些程序设计的疑惑与思考
+          「设计」一些程序设计的疑惑与思考 (一)
         </h1>
 
         <div class="post-meta">
@@ -260,9 +260,8 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-08-06 14:06:37 / Modified: 16:07:27" itemprop="dateCreated datePublished" datetime="2020-08-06T14:06:37+08:00">2020-08-06</time>
+              <time title="Created: 2020-08-13 18:00:48" itemprop="dateCreated datePublished" datetime="2020-08-13T18:00:48+08:00">2020-08-13</time>
             </span>
 
           
@@ -375,6 +374,49 @@
 <li><p>迪米特法则<br>适用对象:模块，类<br>侧重点:低耦合<br>思考角度:类关系</p>
 </li>
 </ol>
+<h2 id="16-为什么要分-MVC-三层开发？"><a href="#16-为什么要分-MVC-三层开发？" class="headerlink" title="16.为什么要分 MVC 三层开发？"></a>16.为什么要分 MVC 三层开发？</h2><ol>
+<li><p>分层能起到代码复用的作用<br>比如UserService接口，getUserById() 可能被UserController 和 AdminController 等多个类调用，如果没有分层，每个controller都要实现查找用户的功能。</p>
+</li>
+<li><p>分层起到了隔离变化的作用<br>Repository层是数据库操作，Service层操作Repository的时候其实不关心用的哪个数据库，切换数据库也很方便。二一个数据库表一般不怎么变化，所以Repository层相对比较稳定，由于Controller层面向调用方，Service层面向业务逻辑，变动的可能性就比较大。分层之后各个层的变动不会影响到其他层，给系统带来稳定性。</p>
+</li>
+<li><p>分层能起到隔离关注点的作用<br>Repository 层只关注数据的读写。Service 层只关注业务逻辑，不关注数据的来源。Controller 层只关注与外界打交道，数据校验、封装、格式转换，并不关心业务逻辑。三层之间的关注点不同，分层之后，职责分明，更加符合单一职责原则，代码的内聚性更好。</p>
+</li>
+<li><p>分层能提高代码的可测试性<br>单元测试不依赖不可控的外部组件，比如数据库。分层之后，Repsitory 层的代码通过依赖注入的方式供 Service 层使用，当要测试包含核心业务逻辑的 Service 层代码的时候，我们可以用 mock 的数据源替代真实的数据库，注入到 Service 层代码中</p>
+</li>
+<li><p>分层能应对系统的复杂性<br>所有的代码都放到一个类中，那这个类的代码就会因为需求的迭代而无限膨胀。我们知道，当一个类或一个函数的代码过多之后，可读性、可维护性就会变差。那我们就要想办法拆分。拆分有垂直和水平两个方向。水平方向基于业务来做拆分，就是模块化；垂直方向基于流程来做拆分，就是这里说的分层。</p>
+</li>
+</ol>
+<h2 id="17-BO、VO、Entity-存在的意义是什么？"><a href="#17-BO、VO、Entity-存在的意义是什么？" class="headerlink" title="17.BO、VO、Entity 存在的意义是什么？"></a>17.BO、VO、Entity 存在的意义是什么？</h2><p>实际上，我更加推荐每层都定义各自的数据对象这种设计思路，主要有以下 3 个方面的原因。</p>
+<ul>
+<li>VO、BO、Entity 并非完全一样。比如，我们可以在 UserEntity、UserBo 中定义 Password 字段，但显然不能在 UserVo 中定义 Password 字段，否则就会将用户的密码暴露出去。</li>
+<li>VO、BO、Entity 三个类虽然代码重复，但功能语义不重复，从职责上讲是不一样的。所以，也并不能算违背 DRY 原则。</li>
+<li>为了尽量减少每层之间的耦合，把职责边界划分明确，每层都会维护自己的数据对象，层与层之间通过接口交互。数据从下一层传递到上一层的时候，将下一层的数据对象转化成上一层的数据对象，再继续处理。虽然这样的设计稍微有些繁琐，每层都需要定义各自的数据对象，需要做数据对象之间的转化，但是分层清晰。对于非常大的项目来说，结构清晰是第一位的！</li>
+</ul>
+<h2 id="18-既然-VO、BO、Entity-不能合并，那如何解决代码重复的问题呢？"><a href="#18-既然-VO、BO、Entity-不能合并，那如何解决代码重复的问题呢？" class="headerlink" title="18.既然 VO、BO、Entity 不能合并，那如何解决代码重复的问题呢？"></a>18.既然 VO、BO、Entity 不能合并，那如何解决代码重复的问题呢？</h2><p>用继承、组合。</p>
+<p>从设计的角度来说，VO、BO、Entity 的设计思路并不违反 DRY 原则，为了分层清晰、减少耦合，多维护几个类的成本也并不是不能接受的。但是，如果你真的有代码洁癖，对于代码重复的问题，我们也有一些办法来解决。我们前面讲到，继承可以解决代码重复问题。我们可以将公共的字段定义在父类中，让 VO、BO、Entity 都继承这个父类，各自只定义特有的字段。因为这里的继承层次很浅，也不复杂，所以使用继承并不会影响代码的可读性和可维护性。后期如果因为业务的需要，有些字段需要从父类移动到子类，或者从子类提取到父类，代码改起来也并不复杂。前面在讲“多用组合，少用继承”设计思想的时候，我们提到，组合也可以解决代码重复的问题，所以，这里我们还可以将公共的字段抽取到公共的类中，VO、BO、Entity 通过组合关系来复用这个类的代码。</p>
+<h2 id="19-代码重复问题解决了，那不同分层之间的数据对象该如何互相转化呢？"><a href="#19-代码重复问题解决了，那不同分层之间的数据对象该如何互相转化呢？" class="headerlink" title="19.代码重复问题解决了，那不同分层之间的数据对象该如何互相转化呢？"></a>19.代码重复问题解决了，那不同分层之间的数据对象该如何互相转化呢？</h2><p>用工具类，BeanUtil Dozer等；</p>
+<p>当下一层的数据通过接口调用传递到上一层之后，我们需要将它转化成上一层对应的数据对象类型。比如，Service 层从 Repository 层获取的 Entity 之后，将其转化成 BO，再继续业务逻辑的处理。所以，整个开发的过程会涉及“Entity 到 BO”和“BO 到 VO”这两种转化。最简单的转化方式是手动复制。自己写代码在两个对象之间，一个字段一个字段的赋值。但这样的做法显然是没有技术含量的低级劳动。Java 中提供了多种数据对象转化工具，比如 BeanUtils、Dozer 等，可以大大简化繁琐的对象转化工作。如果你是用其他编程语言来做开发，也可以借鉴 Java 这些工具类的设计思路，自己在项目中实现对象转化工具类。</p>
+<h2 id="20-VO、BO、Entity-都是基于贫血模型的，而且为了兼容框架或开发库（比如-MyBatis、Dozer、BeanUtils），我们还需要定义每个字段的-set-方法。这些都违背-OOP-的封装特性，会导致数据被随意修改。那到底该怎么办好呢？"><a href="#20-VO、BO、Entity-都是基于贫血模型的，而且为了兼容框架或开发库（比如-MyBatis、Dozer、BeanUtils），我们还需要定义每个字段的-set-方法。这些都违背-OOP-的封装特性，会导致数据被随意修改。那到底该怎么办好呢？" class="headerlink" title="20. VO、BO、Entity 都是基于贫血模型的，而且为了兼容框架或开发库（比如 MyBatis、Dozer、BeanUtils），我们还需要定义每个字段的 set 方法。这些都违背 OOP 的封装特性，会导致数据被随意修改。那到底该怎么办好呢？"></a>20. VO、BO、Entity 都是基于贫血模型的，而且为了兼容框架或开发库（比如 MyBatis、Dozer、BeanUtils），我们还需要定义每个字段的 set 方法。这些都违背 OOP 的封装特性，会导致数据被随意修改。那到底该怎么办好呢？</h2><p>前面我们也提到过，Entity 和 VO 的生命周期是有限的，都仅限在本层范围内。而对应的 Repository 层和 Controller 层也都不包含太多业务逻辑，所以也不会有太多代码随意修改数据，即便设计成贫血、定义每个字段的 set 方法，相对来说也是安全的。不过，Service 层包含比较多的业务逻辑代码，所以 BO 就存在被任意修改的风险了。但是，设计的问题本身就没有最优解，只有权衡。为了使用方便，我们只能做一些妥协，放弃 BO 的封装特性，由程序员自己来负责这些数据对象的不被错误使用。</p>
+<h2 id="21-单例模式中DCL-懒汉式Double-Check-Lock-中给，instance-加-volatile-关键字真的可以防止指令重排序吗？"><a href="#21-单例模式中DCL-懒汉式Double-Check-Lock-中给，instance-加-volatile-关键字真的可以防止指令重排序吗？" class="headerlink" title="21.单例模式中DCL(懒汉式Double Check Lock)中给，instance 加 volatile 关键字真的可以防止指令重排序吗？"></a>21.单例模式中DCL(懒汉式Double Check Lock)中给，instance 加 volatile 关键字真的可以防止指令重排序吗？</h2><blockquote>
+<p>注: 按照 fail-fast 的设计原则，懒汉式的延迟加载其实并不是好事。</p>
+</blockquote>
+<p>先说结论：高版本不用了 （未找到出处，存疑）</p>
+<h2 id="22-传统工厂模式的替代方案"><a href="#22-传统工厂模式的替代方案" class="headerlink" title="22.传统工厂模式的替代方案"></a>22.传统工厂模式的替代方案</h2><p>个人意见，传统的工厂模式太麻烦了，除非业务真的很复杂，通常我会选择以下方案。<br>还是举文中的例子</p>
+<ol>
+<li>将不同的RuleConfigParser实现按照约定格式指定beanName注入，比方说@Component(“XmlRuleConfigParser”)，取的时候applicationContext.getBean(typeSuffix+RuleConfigParser)即可，拓展的话，自己写一个xxRuleConfigParser，就注入进去了，也不需要在map容器新增。<br>整个工厂方法就是</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> RuleConfigParser <span class="title">getInstance</span><span class="params">(suffix)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> InstanceLocator.getBean(suffix+<span class="string">"RuleConfigParser"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>直接用java.util.functional实现现代函数式编程范式的设计模式</li>
+</ol>
+<p>像文中的例子,可以看作工厂,也可以看作获取一种parse策略。<br>可以有一个FunctionFactory内部维护一组Function&lt;String,String&gt;函数，再有一个Map容器 mapping type和Function的关系。这样是简化了类的数量，如果业务简单没必要整太多类，function铺在一个factory里可读性不会有什么问题。如果是没有返回值的操作，也可以用Consumer函数。打个比方</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> BiConsumer&lt;AbstractProductServiceRequest, Function&lt;ProductServiceQueryRequest,</span><br><span class="line">      ProductServiceQueryResponse&gt;&gt; operateConsumer() &#123;</span><br><span class="line">      <span class="keyword">switch</span> (serviceOperationEnum) &#123;</span><br><span class="line">          <span class="keyword">case</span> OPEN:</span><br><span class="line">              <span class="keyword">return</span> openConsumer();</span><br><span class="line">          <span class="keyword">case</span> CLOSE:</span><br><span class="line">              <span class="keyword">return</span> closeConsumer();</span><br><span class="line">          <span class="keyword">default</span>:</span><br><span class="line">              <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"not support OperationType"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果是对象，那更简单，Map<Supply>函数即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShapeFactory</span> </span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="keyword">static</span> Map&lt;String, Supplier&lt;Shape&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">  <span class="keyword">static</span> &#123;</span><br><span class="line">    map.put(<span class="string">"CIRCLE"</span>, Circle::<span class="keyword">new</span>);</span><br><span class="line">    map.put(<span class="string">"RECTANGLE"</span>, Rectangle::<span class="keyword">new</span>);</span><br><span class="line">  &#125; </span><br><span class="line">  <span class="function"><span class="keyword">public</span> Shape <span class="title">getShape</span><span class="params">(String shapeType)</span></span>&#123;</span><br><span class="line">     Supplier&lt;Shape&gt; shape = map.get(shapeType.toUpperCase());</span><br><span class="line">     <span class="keyword">if</span>(shape != <span class="keyword">null</span>) &#123;</span><br><span class="line">       <span class="keyword">return</span> shape.get();</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No such shape "</span> + shapeType.toUpperCase());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于比较简单的场景，lambda function等方式代替类，会显得不那么臃肿，具体还是要看需求。</p>
 
     </div>
 
@@ -394,8 +436,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/31/2020-07-31-212801/" rel="prev" title="「Spring」Spring的疑惑与思考">
-      <i class="fa fa-chevron-left"></i> 「Spring」Spring的疑惑与思考
+    <a href="/2020/08/13/2020-08-11-075411/" rel="prev" title="「设计」一些程序设计的疑惑与思考（二）">
+      <i class="fa fa-chevron-left"></i> 「设计」一些程序设计的疑惑与思考（二）
     </a></div>
       <div class="post-nav-item"></div>
     </div>

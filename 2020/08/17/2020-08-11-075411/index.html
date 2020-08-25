@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.loli.net/css?family=Noto Serif SC:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+  <link rel="stylesheet" href="/lib/animate-css/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rosemarry7.github.io","root":"/","scheme":"Muse","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
+  </script>
+
+  <meta name="description" content="概述实际上，设计模式要干的事情就是解耦，是为了应对代码的复杂性。创建型模式是将创建和使用代码解耦，结构型模式是将不同功能代码解耦，行为型模式是将不同的行为代码解耦。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「设计」一些程序设计的疑惑与思考（二）">
+<meta property="og:url" content="https://rosemarry7.github.io/rosemarry7/2020/08/17/2020-08-11-075411/index.html">
+<meta property="og:site_name" content="Rosemarry">
+<meta property="og:description" content="概述实际上，设计模式要干的事情就是解耦，是为了应对代码的复杂性。创建型模式是将创建和使用代码解耦，结构型模式是将不同功能代码解耦，行为型模式是将不同的行为代码解耦。">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:published_time" content="2020-08-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-08-21T09:26:43.891Z">
+<meta property="article:author" content="LaoZ">
+<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="设计原则">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://rosemarry7.github.io/rosemarry7/2020/08/17/2020-08-11-075411/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-tw'
+  };
+</script>
+
+  <title>「设计」一些程序设计的疑惑与思考（二） | Rosemarry</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Rosemarry" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Rosemarry</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-两种静态代理模式的实现方法，一种基于组合（实现共同接口），一种基于继承，各有什么优缺点？"><span class="nav-number">2.</span> <span class="nav-text">1.两种静态代理模式的实现方法，一种基于组合（实现共同接口），一种基于继承，各有什么优缺点？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-关于代理模式和装饰者模式，各自应用场景和区别"><span class="nav-number">3.</span> <span class="nav-text">2. 关于代理模式和装饰者模式，各自应用场景和区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-享元模式-VS-单例、缓存、对象池"><span class="nav-number">4.</span> <span class="nav-text">3. 享元模式 VS 单例、缓存、对象池</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Integer中的IntegerCache优化空间？"><span class="nav-number">5.</span> <span class="nav-text">4. Integer中的IntegerCache优化空间？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-软引用、若引用和WeakHashMap"><span class="nav-number">6.</span> <span class="nav-text">5. 软引用、若引用和WeakHashMap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-生产-消费者模型和观察者模式的区别？"><span class="nav-number">7.</span> <span class="nav-text">6. 生产-消费者模型和观察者模式的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-Google-Guava-EventBus-观察者模式的最佳实践！！"><span class="nav-number">8.</span> <span class="nav-text">7. Google Guava EventBus 观察者模式的最佳实践！！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Java中的模版方法"><span class="nav-number">9.</span> <span class="nav-text">8. Java中的模版方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-假设一个框架中的某个类暴露了两个模板方法，并且定义了一堆供模板方法调用的抽象方法，代码示例如下所示。在项目开发中，即便我们只用到这个类的其中一个模板方法，我们还是要在子类中把所有的抽象方法都实现一遍，这相当于无效劳动，有没有其他方式来解决这个问题呢？"><span class="nav-number">10.</span> <span class="nav-text">9. 假设一个框架中的某个类暴露了两个模板方法，并且定义了一堆供模板方法调用的抽象方法，代码示例如下所示。在项目开发中，即便我们只用到这个类的其中一个模板方法，我们还是要在子类中把所有的抽象方法都实现一遍，这相当于无效劳动，有没有其他方式来解决这个问题呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-回调"><span class="nav-number">11.</span> <span class="nav-text">10. 回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-模板模式-VS-回调"><span class="nav-number">12.</span> <span class="nav-text">11. 模板模式 VS 回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-重构原则：接口与实现分离"><span class="nav-number">13.</span> <span class="nav-text">12. 重构原则：接口与实现分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-工厂模式和策略模式"><span class="nav-number">14.</span> <span class="nav-text">13. 工厂模式和策略模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-在策略工厂类中，如果每次都要返回新的策略对象，我们还是需要在工厂类中编写-if-else-分支判断逻辑，那这个问题该如何解决呢？"><span class="nav-number">15.</span> <span class="nav-text">14. 在策略工厂类中，如果每次都要返回新的策略对象，我们还是需要在工厂类中编写 if-else 分支判断逻辑，那这个问题该如何解决呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15-责任链模式的应用"><span class="nav-number">16.</span> <span class="nav-text">15. 责任链模式的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16-责任链模式和代理模式"><span class="nav-number">17.</span> <span class="nav-text">16. 责任链模式和代理模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#17-有限状态机"><span class="nav-number">18.</span> <span class="nav-text">17. 有限状态机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#18-状态模式的应用"><span class="nav-number">19.</span> <span class="nav-text">18.状态模式的应用</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">LaoZ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-tw">
+    <link itemprop="mainEntityOfPage" href="https://rosemarry7.github.io/rosemarry7/2020/08/17/2020-08-11-075411/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="LaoZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rosemarry">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          「设计」一些程序设计的疑惑与思考（二）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-17 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-17T00:00:00+08:00">2020-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-21 17:26:43" itemprop="dateModified" datetime="2020-08-21T17:26:43+08:00">2020-08-21</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>实际上，设计模式要干的事情就是解耦，是为了应对代码的复杂性。创建型模式是将创建和使用代码解耦，结构型模式是将不同功能代码解耦，行为型模式是将不同的行为代码解耦。</p>
+<a id="more"></a>
+
+<h2 id="1-两种静态代理模式的实现方法，一种基于组合（实现共同接口），一种基于继承，各有什么优缺点？"><a href="#1-两种静态代理模式的实现方法，一种基于组合（实现共同接口），一种基于继承，各有什么优缺点？" class="headerlink" title="1.两种静态代理模式的实现方法，一种基于组合（实现共同接口），一种基于继承，各有什么优缺点？"></a>1.两种静态代理模式的实现方法，一种基于组合（实现共同接口），一种基于继承，各有什么优缺点？</h2><p>组合模式的优点在于比较灵活，和被代理类实现共同的接口，可以代理所有的子类。缺点就是需要实现接口的所有方法，违反单一职责和接口隔离原则。</p>
+<p>基于继承的代理实现不需要实现接口的所有方法，但是只能代理当前父类</p>
+<h2 id="2-关于代理模式和装饰者模式，各自应用场景和区别"><a href="#2-关于代理模式和装饰者模式，各自应用场景和区别" class="headerlink" title="2. 关于代理模式和装饰者模式，各自应用场景和区别"></a>2. 关于代理模式和装饰者模式，各自应用场景和区别</h2><ol>
+<li><p>代理模式和装饰者模式都是 代码增强这一件事的落地方案。前者个人认为偏重业务无关，高度抽象，和稳定性较高的场景（性能其实可以抛开不谈）。后者偏重业务相关，定制化诉求高，改动较频繁的场景。</p>
+</li>
+<li><p>缓存这件事一般都是高度抽象，全业务通用，基本不会改动的东西，所以一般也是采用代理模式，让业务开发从缓存代码的重复劳动中解放出来。但如果当前业务的缓存实现需要特殊化定制，需要揉入业务属性，那么就该采用装饰者模式。因为其定制性强，其他业务也用不着，而且业务是频繁变动的，所以改动的可能也大，相对于动代，装饰者在调整（修改和重组）代码这件事上显得更灵活。</p>
+</li>
+<li><p>Decorator关注为对象动态的添加功能, Proxy关注对象的信息隐藏及访问控制.<br>Decorator体现多态性, Proxy体现封装性.</p>
+</li>
+</ol>
+<h2 id="3-享元模式-VS-单例、缓存、对象池"><a href="#3-享元模式-VS-单例、缓存、对象池" class="headerlink" title="3. 享元模式 VS 单例、缓存、对象池"></a>3. 享元模式 VS 单例、缓存、对象池</h2><p>实际上，享元模式的代码实现非常简单，主要是通过工厂模式，在工厂类中，通过一个 Map 来缓存已经创建过的享元对象，来达到复用的目的。</p>
+<p>应用单例模式是为了保证对象全局唯一。应用享元模式是为了实现对象复用，节省内存。缓存是为了提高访问效率，而非复用。池化技术中的“复用”理解为“重复使用”，主要是为了节省时间。</p>
+<p>池化技术中的“复用”可以理解为“重复使用”，主要目的是节省时间.享元模式中的“复用”可以理解为“共享使用”，在整个生命周期中，都是被所有使用者共享的，主要目的是节省空间。</p>
+<h2 id="4-Integer中的IntegerCache优化空间？"><a href="#4-Integer中的IntegerCache优化空间？" class="headerlink" title="4. Integer中的IntegerCache优化空间？"></a>4. Integer中的IntegerCache优化空间？</h2><blockquote>
+<p>问： 享元池用weak reference持有享元对象<br>答： 从学术上是的，从使用上，大部分人碰不到这么严苛的场景啦。如果真的玩字符串之类的优化，还有很多玩法，类似用ThreadLocal做线程安全的StringBuilder char[]数组复用，等等。首先现在的内存是一个比较低价的资源，其次gc相关的优化越来越多，用g1回收器的应该就没有full gc了（g1情况下还有full gc一般是代码有问题）,如果说ygc比较慢，11的zgc直接一步到位了。反正我生产从g1切zgc,ygc差不多从80ms直接到20ms以下。权衡一下利弊就好了，现在比起20年前，留给我们开发的选择已经多了很多，服务器资源说白了变得宽松很多了。</p>
+</blockquote>
+<blockquote>
+<p>问： 是不是应该软引用更好一点，因为感觉弱应用太容易被回收<br>答： 我偏向使用弱引用。因为我们是老项目，fgc的开销大，所以会希望尽量少的fgc。另外也希望减少缓存空间整体的大小，以便更快定位到目标缓存对象的ref。</p>
+</blockquote>
+<blockquote>
+<p>答： 如果IntegerCache不事先指定缓存哪些整形对象，那么每次用到的时候去new一个，这样会稍微影响一些效率，尤其在某些情况下如果常用到-128~127之间的数，可能会不停的new/delete, 不过这个性能问题在大部分时候影响不是很大，所以按照string的设计思路也是可行的，<br>按照这个思路设计IntegerCache类的话，如下</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">IntegerCache</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> WeakHashMap&lt;Integer, WeakReference&lt;Integer&gt;&gt; cache = </span><br><span class="line">        <span class="keyword">new</span> WeakHashMap&lt;Integer, WeakReference&lt;Integer&gt;&gt;(); <span class="comment">//也可以提前分配容量</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">IntegerCache</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123; </span><br><span class="line">    <span class="keyword">final</span> WeakReference&lt;Integer&gt; cached = IntegerCache.cache.get(i);</span><br><span class="line">    <span class="keyword">if</span> (cached != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">final</span> Integer value = cached.get(i);</span><br><span class="line">        <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    WeakReference&lt;Integer&gt; val = <span class="keyword">new</span> WeakReference&lt;Integer&gt;(i);</span><br><span class="line">    IntegerCache.cache.put(i, val);</span><br><span class="line">    <span class="keyword">return</span> val.get(); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>答： 自己尝试了写了一个，然后分别测试了10,000次、100,000次，1,000,000次创建，value从1-100，100-200，10000-10100，发现不管哪个场景，总是JVM的Integer时间更短，我写的要3倍左右的时间，不禁感叹，Java二十几年了，大部分的优化应该都做了，不要期望自己花20分钟能改出超过JVM的性能。</p>
+</blockquote>
+<h2 id="5-软引用、若引用和WeakHashMap"><a href="#5-软引用、若引用和WeakHashMap" class="headerlink" title="5. 软引用、若引用和WeakHashMap"></a>5. 软引用、若引用和WeakHashMap</h2><p><a href="https://www.baeldung.com/java-weakhashmap" target="_blank" rel="noopener">https://www.baeldung.com/java-weakhashmap</a><br><a href="https://www.baeldung.com/java-soft-references" target="_blank" rel="noopener">https://www.baeldung.com/java-soft-references</a><br><a href="https://www.baeldung.com/java-weak-reference" target="_blank" rel="noopener">https://www.baeldung.com/java-weak-reference</a></p>
+<h2 id="6-生产-消费者模型和观察者模式的区别？"><a href="#6-生产-消费者模型和观察者模式的区别？" class="headerlink" title="6. 生产-消费者模型和观察者模式的区别？"></a>6. 生产-消费者模型和观察者模式的区别？</h2><p>发布-订阅模型，是一对多的关系，可以以同步的方式实现，也可以以异步的方式实现，订阅者之间没有竞争关系。<br>生产-消费模型，是多对多的关系，一般以异步的方式实现，消费者之间存在竞争关系。<br>两者都可以达到解耦的作用</p>
+<p>目前Java响应式编程中的RxJava和Vert.X都是基于观察者模式实现的，且都是异步方式。</p>
+<h2 id="7-Google-Guava-EventBus-观察者模式的最佳实践！！"><a href="#7-Google-Guava-EventBus-观察者模式的最佳实践！！" class="headerlink" title="7. Google Guava EventBus 观察者模式的最佳实践！！"></a>7. Google Guava EventBus 观察者模式的最佳实践！！</h2><h2 id="8-Java中的模版方法"><a href="#8-Java中的模版方法" class="headerlink" title="8. Java中的模版方法"></a>8. Java中的模版方法</h2><p>InputStream 中的模版方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">InputStream</span> <span class="keyword">implements</span> <span class="title">Closeable</span> </span>&#123;</span><br><span class="line">  <span class="comment">//...省略其他代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">byte</span> b[], <span class="keyword">int</span> off, <span class="keyword">int</span> len)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (b == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (off &lt; <span class="number">0</span> || len &lt; <span class="number">0</span> || len &gt; b.length - off) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IndexOutOfBoundsException();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> c = read();</span><br><span class="line">    <span class="keyword">if</span> (c == -<span class="number">1</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    b[off] = (<span class="keyword">byte</span>)c;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">for</span> (; i &lt; len ; i++) &#123;</span><br><span class="line">        c = read();</span><br><span class="line">        <span class="keyword">if</span> (c == -<span class="number">1</span>) &#123;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        b[off + i] = (<span class="keyword">byte</span>)c;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException ee) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> i;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ByteArrayInputStream</span> <span class="keyword">extends</span> <span class="title">InputStream</span> </span>&#123;</span><br><span class="line">  <span class="comment">//...省略其他代码...</span></span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (pos &lt; count) ? (buf[pos++] &amp; <span class="number">0xff</span>) : -<span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Java Servlet</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> ServletException, IOException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HttpServletRequest  request;</span><br><span class="line">    HttpServletResponse response;</span><br><span class="line">    <span class="keyword">if</span> (!(req <span class="keyword">instanceof</span> HttpServletRequest &amp;&amp;</span><br><span class="line">            res <span class="keyword">instanceof</span> HttpServletResponse)) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ServletException(<span class="string">"non-HTTP request or response"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    request = (HttpServletRequest) req;</span><br><span class="line">    response = (HttpServletResponse) res;</span><br><span class="line">    service(request, response);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> ServletException, IOException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    String method = req.getMethod();</span><br><span class="line">    <span class="keyword">if</span> (method.equals(METHOD_GET)) &#123;</span><br><span class="line">        <span class="keyword">long</span> lastModified = getLastModified(req);</span><br><span class="line">        <span class="keyword">if</span> (lastModified == -<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="comment">// servlet doesn't support if-modified-since, no reason</span></span><br><span class="line">            <span class="comment">// to go through further expensive logic</span></span><br><span class="line">            doGet(req, resp);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">long</span> ifModifiedSince = req.getDateHeader(HEADER_IFMODSINCE);</span><br><span class="line">            <span class="keyword">if</span> (ifModifiedSince &lt; lastModified) &#123;</span><br><span class="line">                <span class="comment">// If the servlet mod time is later, call doGet()</span></span><br><span class="line">                <span class="comment">// Round down to the nearest second for a proper compare</span></span><br><span class="line">                <span class="comment">// A ifModifiedSince of -1 will always be less</span></span><br><span class="line">                maybeSetLastModified(resp, lastModified);</span><br><span class="line">                doGet(req, resp);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                resp.setStatus(HttpServletResponse.SC_NOT_MODIFIED);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_HEAD)) &#123;</span><br><span class="line">        <span class="keyword">long</span> lastModified = getLastModified(req);</span><br><span class="line">        maybeSetLastModified(resp, lastModified);</span><br><span class="line">        doHead(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_POST)) &#123;</span><br><span class="line">        doPost(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_PUT)) &#123;</span><br><span class="line">        doPut(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_DELETE)) &#123;</span><br><span class="line">        doDelete(req, resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_OPTIONS)) &#123;</span><br><span class="line">        doOptions(req,resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (method.equals(METHOD_TRACE)) &#123;</span><br><span class="line">        doTrace(req,resp);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        String errMsg = lStrings.getString(<span class="string">"http.method_not_implemented"</span>);</span><br><span class="line">        Object[] errArgs = <span class="keyword">new</span> Object[<span class="number">1</span>];</span><br><span class="line">        errArgs[<span class="number">0</span>] = method;</span><br><span class="line">        errMsg = MessageFormat.format(errMsg, errArgs);</span><br><span class="line">        resp.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED, errMsg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="9-假设一个框架中的某个类暴露了两个模板方法，并且定义了一堆供模板方法调用的抽象方法，代码示例如下所示。在项目开发中，即便我们只用到这个类的其中一个模板方法，我们还是要在子类中把所有的抽象方法都实现一遍，这相当于无效劳动，有没有其他方式来解决这个问题呢？"><a href="#9-假设一个框架中的某个类暴露了两个模板方法，并且定义了一堆供模板方法调用的抽象方法，代码示例如下所示。在项目开发中，即便我们只用到这个类的其中一个模板方法，我们还是要在子类中把所有的抽象方法都实现一遍，这相当于无效劳动，有没有其他方式来解决这个问题呢？" class="headerlink" title="9. 假设一个框架中的某个类暴露了两个模板方法，并且定义了一堆供模板方法调用的抽象方法，代码示例如下所示。在项目开发中，即便我们只用到这个类的其中一个模板方法，我们还是要在子类中把所有的抽象方法都实现一遍，这相当于无效劳动，有没有其他方式来解决这个问题呢？"></a>9. 假设一个框架中的某个类暴露了两个模板方法，并且定义了一堆供模板方法调用的抽象方法，代码示例如下所示。在项目开发中，即便我们只用到这个类的其中一个模板方法，我们还是要在子类中把所有的抽象方法都实现一遍，这相当于无效劳动，有没有其他方式来解决这个问题呢？</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractClass</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">templateMethod1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    method1();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    method2();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">templateMethod2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    method3();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    method4();</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method1</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method2</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method3</span><span class="params">()</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">method4</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>答： 可以使用适配器模式，搞个适配器把所有方法默认实现一下，子类继承适配器即可，在 spring 生命周期中，InstantiationAwareBeanPostProcessorAdapter<br>就是解决这个问题的。</p>
+<p>答： 根据单一职责原则 可以拆分成两个抽象类</p>
+<p>答： 可以借鉴AbstractList的addall实现。提供默认的方法method1…method4方法，每个方法直接抛出异常，使用模板方法的时候强制重写用到的method方法，用不到的method不用重写。</p>
+<h2 id="10-回调"><a href="#10-回调" class="headerlink" title="10. 回调"></a>10. 回调</h2><p>二者比较相似，都是要做到复用的扩展。</p>
+<p>回调的典型应用：</p>
+<ol>
+<li><p>Spring中的各种Template，比如，JdbcTemplate、RedisTemplate、RestTemplate。尽管都叫作 xxxTemplate，但它们并非基于模板模式来实现的，而是基于回调来实现的，确切地说应该是同步回调。而同步回调从应用场景上很像模板模式，所以，在命名上，这些类使用 Template（模板）这个单词作为后缀。</p>
+</li>
+<li><p>Runtime.getRuntime().addShutdownHook(new Thread());</p>
+</li>
+</ol>
+<h2 id="11-模板模式-VS-回调"><a href="#11-模板模式-VS-回调" class="headerlink" title="11. 模板模式 VS 回调"></a>11. 模板模式 VS 回调</h2><p>回调的原理、实现和应用到此就都讲完了。接下来，我们从应用场景和代码实现两个角度，来对比一下模板模式和回调。</p>
+<p>从应用场景上来看，同步回调跟模板模式几乎一致。它们都是在一个大的算法骨架中，自由替换其中的某个步骤，起到代码复用和扩展的目的。而异步回调跟模板模式有较大差别，更像是观察者模式。</p>
+<p>从代码实现上来看，回调和模板模式完全不同。回调基于组合关系来实现，把一个对象传递给另一个对象，是一种对象之间的关系；模板模式基于继承关系来实现，子类重写父类的抽象方法，是一种类之间的关系。</p>
+<p>前面我们也讲到，组合优于继承。实际上，这里也不例外。在代码实现上，回调相对于模板模式会更加灵活，主要体现在下面几点。</p>
+<ul>
+<li>像 Java 这种只支持单继承的语言，基于模板模式编写的子类，已经继承了一个父类，不再具有继承的能力。</li>
+<li>回调可以使用匿名类来创建回调对象，可以不用事先定义类；而模板模式针对不同的实现都要定义不同的子类。</li>
+<li>如果某个类中定义了多个模板方法，每个方法都有对应的抽象方法，那即便我们只用到其中的一个模板方法，子类也必须实现所有的抽象方法。而回调就更加灵活，我们只需要往用到的模板方法中注入回调对象即可。</li>
+</ul>
+<h2 id="12-重构原则：接口与实现分离"><a href="#12-重构原则：接口与实现分离" class="headerlink" title="12. 重构原则：接口与实现分离"></a>12. 重构原则：接口与实现分离</h2><ol>
+<li>应当根据行为而不是状态定义一个类。也就是说，一个类的实现首先建立在行为的基础之上，而不是建立在状态的基础之上。</li>
+<li>在实现行为时，是用抽象状态而不是用具体状态。如果一个行为涉及到对象的状态时，使用间接的引用而不是直接的引用。换言之，应当使用取值方法而不是直接引用属性。</li>
+<li>给操作划分层次。一个类的行为应当放到一个小组核心方法（Kernel Methods）里面，这些方法可以很方便地在子类中加以置换。</li>
+<li>将状态属性的确认推迟到子类中。不要在抽象类中过早地声明属性变量，应将它们尽量地推迟到子类中去声明。在抽象超类中，如果需要状态属性的话，可以调用抽象的取值方法，而将抽象的取值方法的实现放到具体子类中。</li>
+</ol>
+<p>如果能够遵从这样的原则，那么就可以在等级结构中将接口与实现分隔开来，将抽象与具体分割开来，从而保证代码可以最大限度地被复用。这个过程实际上是将设计师引导到模版方法模式上去。</p>
+<h2 id="13-工厂模式和策略模式"><a href="#13-工厂模式和策略模式" class="headerlink" title="13. 工厂模式和策略模式"></a>13. 工厂模式和策略模式</h2><p>工厂模式<br>1.目的是创建不同且相关的对象<br>2.侧重于”创建对象”<br>3.实现方式上可以通过父类或者接口<br>4.一般创建对象应该是现实世界中某种事物的映射，有它自己的属性与方法！</p>
+<p>策略模式<br>1.目的实现方便地替换不同的算法类<br>2.侧重于算法(行为)实现<br>3.实现主要通过接口<br>4.创建对象对行为的抽象而非对对象的抽象，很可能没有属于自己的属性。</p>
+<h2 id="14-在策略工厂类中，如果每次都要返回新的策略对象，我们还是需要在工厂类中编写-if-else-分支判断逻辑，那这个问题该如何解决呢？"><a href="#14-在策略工厂类中，如果每次都要返回新的策略对象，我们还是需要在工厂类中编写-if-else-分支判断逻辑，那这个问题该如何解决呢？" class="headerlink" title="14. 在策略工厂类中，如果每次都要返回新的策略对象，我们还是需要在工厂类中编写 if-else 分支判断逻辑，那这个问题该如何解决呢？"></a>14. 在策略工厂类中，如果每次都要返回新的策略对象，我们还是需要在工厂类中编写 if-else 分支判断逻辑，那这个问题该如何解决呢？</h2><p>仍然可以用查表法，只不过存储的不再是实例，而是class，使用时获取对应的class，再通过反射创建实例。</p>
+<h2 id="15-责任链模式的应用"><a href="#15-责任链模式的应用" class="headerlink" title="15. 责任链模式的应用"></a>15. 责任链模式的应用</h2><p>Servlet Filter、Spring Interceptor 之外，Dubbo Filter、Netty ChannelPipeline</p>
+<p>Dubbo Filter的核心处理逻辑在ProtocolFilterWrapper类下的buildInvokerChain这个方法中，属于把所有的filter的类对象搞成一个list，通过遍历list去调用所有的filter，Netty ChannelPipeline我记得是一个双向链表，pipeline 中的节点的数据结构是 ChannelHandlerContext 类，每个 ChannelHandlerContext 包含一个 ChannelHandler这种，支持从头尾开始传播事件，也就是触发调用，也可以从中间节点进行调用，入栈(read)是从head开始传播，也就是开始依次调用，出栈(write)是从tail开始传播，倒着调用。感觉算是对责任链的一个拓展使用</p>
+<h2 id="16-责任链模式和代理模式"><a href="#16-责任链模式和代理模式" class="headerlink" title="16. 责任链模式和代理模式"></a>16. 责任链模式和代理模式</h2><p>Spring AOP 是基于代理模式来实现的。在实际的项目开发中，我们可以利用 AOP 来实现访问控制功能，比如鉴权、限流、日志等。今天我们又讲到，Servlet Filter、Spring Interceptor 也可以用来实现访问控制。那在项目开发中，类似权限这样的访问控制功能，我们该选择三者（AOP、Servlet Filter、Spring Interceptor）中的哪个来实现呢？有什么参考标准吗？</p>
+<p>Filter 可以拿到原始的http请求，但是拿不到你请求的控制器和请求控制器中的方法的信息;<br>Interceptor 可以拿到你请求的控制器和方法，却拿不到请求方法的参数;<br>Aop 可以拿到方法的参数，但是却拿不到http请求和响应的对象;</p>
+<h2 id="17-有限状态机"><a href="#17-有限状态机" class="headerlink" title="17. 有限状态机"></a>17. 有限状态机</h2><p>有限状态机，英文翻译是 Finite State Machine，缩写为 FSM，简称为状态机。状态机有 3 个组成部分：状态（State）、事件（Event）、动作（Action）。其中，事件也称为转移条件（Transition Condition）。事件触发状态的转移及动作的执行。不过，动作不是必须的，也可能只转移状态，不执行任何动作。</p>
+<p>状态模式是状态机的一种实现方式</p>
+<p>状态机的主要实现方式：</p>
+<ol>
+<li>分支逻辑法</li>
+<li>查表法</li>
+<li>状态模式</li>
+</ol>
+<h2 id="18-状态模式的应用"><a href="#18-状态模式的应用" class="headerlink" title="18.状态模式的应用"></a>18.状态模式的应用</h2><p>工单的审批 /nextNode 接口<br>Flutter里引入了Bloc框架后，就是非常典型的状态模式（或是有限状态机）。<a href="https://bloclibrary.dev/#/coreconcepts" target="_blank" rel="noopener">https://bloclibrary.dev/#/coreconcepts</a><br>TCP<br>绘图软件</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" rel="tag"># 设计原则</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/17/2020-08-22-073300/" rel="prev" title="「重构」关于重构（Refactoring）的一些看法和思考">
+      <i class="fa fa-chevron-left"></i> 「重构」关于重构（Refactoring）的一些看法和思考
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/17/2020-08-21-172400/" rel="next" title="「设计」一些程序设计的疑惑与思考（三）">
+      「设计」一些程序设计的疑惑与思考（三） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LaoZ</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://rosemarry7.github.io/images/20200826/beanpostprocessor.jpg">
 <meta property="article:published_time" content="2020-07-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-03T07:31:59.159Z">
+<meta property="article:modified_time" content="2020-09-08T12:57:03.591Z">
 <meta property="article:author" content="LaoZ">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
@@ -179,7 +179,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AbstractRefreshableApplicationContext和GenericApplicationContext-父类继承了一个BeanFactory-为什么还要持有一个DefaultListableBeanFactory"><span class="nav-number">2.</span> <span class="nav-text">AbstractRefreshableApplicationContext和GenericApplicationContext 父类继承了一个BeanFactory 为什么还要持有一个DefaultListableBeanFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FactoryBean-到底是做什么用的？"><span class="nav-number">3.</span> <span class="nav-text">FactoryBean 到底是做什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanPostProcessor接口是干什么用的？"><span class="nav-number">4.</span> <span class="nav-text">BeanPostProcessor接口是干什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型接口的注入和实例化"><span class="nav-number">5.</span> <span class="nav-text">泛型接口的注入和实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基类是否存在注入和实例化？"><span class="nav-number">6.</span> <span class="nav-text">基类是否存在注入和实例化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定优于配置"><span class="nav-number">7.</span> <span class="nav-text">约定优于配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模版方法应用于Bean的创建和销毁"><span class="nav-number">8.</span> <span class="nav-text">模版方法应用于Bean的创建和销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-初始化对象三步走，与其中的模版方法模式"><span class="nav-number">9.</span> <span class="nav-text">Spring 初始化对象三步走，与其中的模版方法模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring编程模型"><span class="nav-number">10.</span> <span class="nav-text">Spring编程模型</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AbstractRefreshableApplicationContext和GenericApplicationContext-父类继承了一个BeanFactory-为什么还要持有一个DefaultListableBeanFactory"><span class="nav-number">2.</span> <span class="nav-text">AbstractRefreshableApplicationContext和GenericApplicationContext 父类继承了一个BeanFactory 为什么还要持有一个DefaultListableBeanFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FactoryBean-到底是做什么用的？"><span class="nav-number">3.</span> <span class="nav-text">FactoryBean 到底是做什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanPostProcessor接口是干什么用的？"><span class="nav-number">4.</span> <span class="nav-text">BeanPostProcessor接口是干什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型接口的注入和实例化"><span class="nav-number">5.</span> <span class="nav-text">泛型接口的注入和实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基类是否存在注入和实例化？"><span class="nav-number">6.</span> <span class="nav-text">基类是否存在注入和实例化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定优于配置"><span class="nav-number">7.</span> <span class="nav-text">约定优于配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模版方法应用于Bean的创建和销毁"><span class="nav-number">8.</span> <span class="nav-text">模版方法应用于Bean的创建和销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-初始化对象三步走，与其中的模版方法模式"><span class="nav-number">9.</span> <span class="nav-text">Spring 初始化对象三步走，与其中的模版方法模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring编程模型"><span class="nav-number">10.</span> <span class="nav-text">Spring编程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖解析的源码过程"><span class="nav-number">11.</span> <span class="nav-text">依赖解析的源码过程</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -267,7 +267,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-03 15:31:59" itemprop="dateModified" datetime="2020-09-03T15:31:59+08:00">2020-09-03</time>
+                <time title="Modified: 2020-09-08 20:57:03" itemprop="dateModified" datetime="2020-09-08T20:57:03+08:00">2020-09-08</time>
               </span>
 
           
@@ -392,6 +392,13 @@
 </ul>
 </li>
 </ul>
+<h2 id="依赖解析的源码过程"><a href="#依赖解析的源码过程" class="headerlink" title="依赖解析的源码过程"></a>依赖解析的源码过程</h2><ol>
+<li>判断是否懒加载 –&gt; DefaultListableBeanFactory#resolveDependency</li>
+<li>判断是否是多类型的bean –&gt; doResolveDependency()</li>
+<li>根据类型查找匹配到的bean–&gt;resolveMultipleBeans()</li>
+<li>bean个数大于1,选择bean即@Primary修饰 –&gt; findAutowireCandidates()</li>
+<li>返回结果–&gt; determineAutowireCandidate()</li>
+</ol>
 
     </div>
 

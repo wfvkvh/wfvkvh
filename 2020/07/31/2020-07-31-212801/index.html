@@ -31,7 +31,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://rosemarry7.github.io/images/20200826/beanpostprocessor.jpg">
 <meta property="article:published_time" content="2020-07-30T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-08T12:57:03.591Z">
+<meta property="article:modified_time" content="2020-09-18T03:26:26.381Z">
 <meta property="article:author" content="LaoZ">
 <meta property="article:tag" content="Spring">
 <meta name="twitter:card" content="summary">
@@ -179,7 +179,7 @@
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AbstractRefreshableApplicationContext和GenericApplicationContext-父类继承了一个BeanFactory-为什么还要持有一个DefaultListableBeanFactory"><span class="nav-number">2.</span> <span class="nav-text">AbstractRefreshableApplicationContext和GenericApplicationContext 父类继承了一个BeanFactory 为什么还要持有一个DefaultListableBeanFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FactoryBean-到底是做什么用的？"><span class="nav-number">3.</span> <span class="nav-text">FactoryBean 到底是做什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanPostProcessor接口是干什么用的？"><span class="nav-number">4.</span> <span class="nav-text">BeanPostProcessor接口是干什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型接口的注入和实例化"><span class="nav-number">5.</span> <span class="nav-text">泛型接口的注入和实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基类是否存在注入和实例化？"><span class="nav-number">6.</span> <span class="nav-text">基类是否存在注入和实例化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定优于配置"><span class="nav-number">7.</span> <span class="nav-text">约定优于配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模版方法应用于Bean的创建和销毁"><span class="nav-number">8.</span> <span class="nav-text">模版方法应用于Bean的创建和销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-初始化对象三步走，与其中的模版方法模式"><span class="nav-number">9.</span> <span class="nav-text">Spring 初始化对象三步走，与其中的模版方法模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring编程模型"><span class="nav-number">10.</span> <span class="nav-text">Spring编程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖解析的源码过程"><span class="nav-number">11.</span> <span class="nav-text">依赖解析的源码过程</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AbstractRefreshableApplicationContext和GenericApplicationContext-父类继承了一个BeanFactory-为什么还要持有一个DefaultListableBeanFactory"><span class="nav-number">2.</span> <span class="nav-text">AbstractRefreshableApplicationContext和GenericApplicationContext 父类继承了一个BeanFactory 为什么还要持有一个DefaultListableBeanFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FactoryBean-到底是做什么用的？"><span class="nav-number">3.</span> <span class="nav-text">FactoryBean 到底是做什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BeanPostProcessor接口是干什么用的？"><span class="nav-number">4.</span> <span class="nav-text">BeanPostProcessor接口是干什么用的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型接口的注入和实例化"><span class="nav-number">5.</span> <span class="nav-text">泛型接口的注入和实例化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基类是否存在注入和实例化？"><span class="nav-number">6.</span> <span class="nav-text">基类是否存在注入和实例化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约定优于配置"><span class="nav-number">7.</span> <span class="nav-text">约定优于配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模版方法应用于Bean的创建和销毁"><span class="nav-number">8.</span> <span class="nav-text">模版方法应用于Bean的创建和销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-初始化对象三步走，与其中的模版方法模式"><span class="nav-number">9.</span> <span class="nav-text">Spring 初始化对象三步走，与其中的模版方法模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring编程模型"><span class="nav-number">10.</span> <span class="nav-text">Spring编程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖解析的源码过程"><span class="nav-number">11.</span> <span class="nav-text">依赖解析的源码过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AutoWire-的注入规则"><span class="nav-number">12.</span> <span class="nav-text">@AutoWire 的注入规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#singleton-和-prototype-作用域"><span class="nav-number">13.</span> <span class="nav-text">singleton 和 prototype 作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#prototype-作用域的-bean-的销毁方法"><span class="nav-number">14.</span> <span class="nav-text">prototype 作用域的 bean 的销毁方法</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -193,14 +193,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -267,7 +267,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-09-08 20:57:03" itemprop="dateModified" datetime="2020-09-08T20:57:03+08:00">2020-09-08</time>
+                <time title="Modified: 2020-09-18 11:26:26" itemprop="dateModified" datetime="2020-09-18T11:26:26+08:00">2020-09-18</time>
               </span>
 
           
@@ -399,6 +399,15 @@
 <li>bean个数大于1,选择bean即@Primary修饰 –&gt; findAutowireCandidates()</li>
 <li>返回结果–&gt; determineAutowireCandidate()</li>
 </ol>
+<h2 id="AutoWire-的注入规则"><a href="#AutoWire-的注入规则" class="headerlink" title="@AutoWire 的注入规则"></a>@AutoWire 的注入规则</h2><ol>
+<li>在doCreateBean中会先调用applyMergedBeanDefinitionPostProcessors，后执行populateBean<br>所以会先调用postProcessMergedBeanDefinition后执行InstantiationAwareBeanPostProcessor的postProcessProperties。</li>
+<li>postProcessProperties中有两个步骤：<br>（1）findAutowiringMetadata查找注入元数据，没有缓存就创建，具体是上一节内容。最终会返回InjectionMetadata，里面包括待注入的InjectedElement信息（field、method）等等<br>（2）执行InjectionMetadata的inject方法，具体为AutowiredFieldElement和AutowiredMethodElement的Inject方法<br>（2.1）AutowiredFieldElement inject具体流程：<br>（2.1.1）DependencyDescriptor的创建<br>（2.1.2）调用beanFactory的resolveDependency获取带注入的bean<br>（2.1.2.1）resolveDependency根据具体类型返回候选bean的集合或primary 的bean<br>（2.1.3）利用反射设置field</li>
+</ol>
+<h2 id="singleton-和-prototype-作用域"><a href="#singleton-和-prototype-作用域" class="headerlink" title="singleton 和 prototype 作用域"></a>singleton 和 prototype 作用域</h2><p>结论一：<br>Singleton Bean 无论依赖查找还是依赖注入，均为同一个对象<br>Prototype Bean 无论依赖查找还是依赖注入，均为新生成的对象</p>
+<p>结论二：<br>如果依赖注入集合类型的对象，Singleton Bean 和 Prototype Bean 均会存在一个<br>Prototype Bean 有别于其他地方的依赖注入 Prototype Bean</p>
+<p>结论三：<br>无论是 Singleton 还是 Prototype Bean 均会执行初始化方法回调<br>不过仅 Singleton Bean 会执行销毁方法回调</p>
+<h2 id="prototype-作用域的-bean-的销毁方法"><a href="#prototype-作用域的-bean-的销毁方法" class="headerlink" title="prototype 作用域的 bean 的销毁方法"></a>prototype 作用域的 bean 的销毁方法</h2><p>被注入 bean 中重写 destroy 方法，添加 @preDestroy 注解</p>
+<p>使用处的 Bean 实现 implements DisposableBean 接口的 destroy 方法，方法中调用 bean 的 @PreDestroy 注解加持的destroy方法。</p>
 
     </div>
 
